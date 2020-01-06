@@ -93,8 +93,9 @@ Eureka 采用了 C-S 的设计架构。Eureka Server 作为服务注册功能的
 2. POM（约定 > 配置> 编码）   
 3. YML   
 4. EurekaServer7001_App主启动类(**@EnableEurekaServer**)   
-5. 测试 http://localhost:7001/(No application available 没有服务被发现 O(∩_∩)O因为没有注册服务进来当然不可能有服务被发现
-)   
+5. 测试 http://localhost:7001/   
+No application available 没有服务被发现 O(∩_∩)O因为没有注册服务进来当然不可能有服务被发现
+
 
 **需要引入cloud的一个新技术组件，基本上两步走**   
 1. 新增相关maven坐标   
