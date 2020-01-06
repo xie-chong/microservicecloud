@@ -57,7 +57,7 @@ Eureka是Netflix的一个子模块，也是核心模块之一。Eureka是一个�
 
 ## 3.2 Eureka原理讲解？   
 
-
+![](src/main/resources/img/Dubbo-Architecture.png)
 
 
 
