@@ -1,8 +1,9 @@
 # 01、【初级架构搭建】SpringCloud从零搭建微服务架构视频教程
 
-## 1. microservicecloud-provider-dept-8001 部门微服务提供者Module
+# 1. 微服务概述与SpringCloud   
+## 1.1 microservicecloud-provider-dept-8001 部门微服务提供者Module
 
-### 1.1 构建步骤：   
+### 1.1.1 构建步骤：   
 1. 新建microservicecloud-provider-dept-8001（创建完成后请回到父工程查看pom文件变化）   
 2. POM（约定 > 配置> 编码）   
 3. YML   
@@ -17,8 +18,8 @@
 12. 测试 http://localhost:8001/dept/list
 
 
-## 2. microservicecloud-consumer-dept-80 部门微服务消费者Module   
-### 2.1 RestTemplate   
+## 1.2 microservicecloud-consumer-dept-80 部门微服务消费者Module   
+### 1.2.1 RestTemplate   
 RestTemplate提供了多种便捷访问远程Http服务的方法， 是一种简单便捷的访问restful服务模板类，是Spring提供的用于访问Rest服务的**客户端模板工具集**
 
 RestTemplate提供了多种便捷访问远程Http服务的方法，是一种简单便捷的访问restful服务模板类，是Spring提供的用于访问Rest服务的客户端模板工具集
@@ -29,7 +30,7 @@ RestTemplate提供了多种便捷访问远程Http服务的方法，是一种简�
 官网地址:https://docs.spring.io/spring-framework/docs/4.3.7.RELEASE/javadoc-api/org/springframework/web/client/RestTemplate.html
 
 
-### 2.2 构建步骤：   
+### 1.2.2 构建步骤：   
 1. 新建microservicecloud-consumer-dept-80   
 2. POM（约定 > 配置> 编码）   
 3. YML   
