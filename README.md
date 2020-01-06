@@ -91,7 +91,7 @@ Eureka 采用了 C-S 的设计架构。Eureka Server 作为服务注册功能的
 ### 3.3.1 microservicecloud-eureka-7001 eureka服务注册中心Module   
 1. 新建microservicecloud-eureka-7001   
 2. POM（约定 > 配置> 编码）   
-3. YML   
+3. YML(需要暴露服务注册地址)   
 4. EurekaServer7001_App主启动类(**@EnableEurekaServer**)   
 5. 测试 http://localhost:7001/   
 No application available 没有服务被发现 O(∩_∩)O因为没有注册服务进来当然不可能有服务被发现
@@ -117,7 +117,7 @@ public class EurekaServer7001_App {
 }
 ```
 
-### 3.3.2 将已有的部门微服务(microservicecloud-provider-dept-8001)注册进eureka服务中心 microservicecloud-provider-dept-8001   
+### 3.3.2 将已有的部门微服务(microservicecloud-provider-dept-8001)注册进eureka服务中心   
 1. 修改microservicecloud-provider-dept-8001   
 2. POM（约定 > 配置> 编码）   
 修改部分:   
@@ -146,6 +146,15 @@ eureka:
 http://localhost:7001/   
 微服务注册名(配置在配置文件中spring:application:name: microservicecloud-dept)
 
+### 3.3.3 actuator与注册微服务信息完善   
+1. 主机名称:服务名称修改   
+
+
+
+2. 访问信息有IP信息提示   
+
+
+3. 微服务info内容详细信息   
 
 
 
