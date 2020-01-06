@@ -18,7 +18,7 @@
 
 
 ### 1.2 问题   
-1. 在使用spring框架中的依赖注入注解@Autowired时，idea报了一个警告   
+1. 在使用spring框架中的依赖注入注解@Autowired时，idea报了一个警告？   
 
 ```
 @Autowired
@@ -84,7 +84,7 @@ set方法注入
 
 
 
-2. testWhileIdle is true, validationQuery not set   
+2. testWhileIdle is true, validationQuery not set?   
 暂未解决，不影响系统运行。
 
 
