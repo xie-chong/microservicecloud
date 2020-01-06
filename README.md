@@ -69,6 +69,7 @@ Eureka 采用了 C-S 的设计架构。Eureka Server 作为服务注册功能的
 <p align="center">请注意和Dubbo的架构对比</p>   
 ![](src/main/resources/img/Eureka-Architecture.png)   
 
+
 ![](src/main/resources/img/Dubbo-Architecture.png)   
 
 
