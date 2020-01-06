@@ -84,7 +84,7 @@ set方法注入
 
 
 
-2. testWhileIdle is true, validationQuery not set?   
+2. ERROR 10544 --- [tp1722536394-30] com.alibaba.druid.pool.DruidDataSource   : testWhileIdle is true, validationQuery not set      
 暂未解决，不影响系统运行。
 
 
