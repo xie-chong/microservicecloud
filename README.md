@@ -44,3 +44,20 @@ RestTemplate提供了多种便捷访问远程Http服务的方法，是一种简�
 17. 测试 http://localhost/consumer/dept/get/2   
 http://localhost/consumer/dept/list   
 http://localhost/consumer/dept/add?dname=AI
+
+
+
+# 3. Eureka服务注册与发现   
+
+
+
+
+
+
+
+
+
+
+
+
+
