@@ -98,7 +98,10 @@ set方法注入
 
 
 3. IDEA完美解决 Could not autowire. No beans of 'xxx' type found.报错   
-把 @Mapper 换成 @Repository
+把 @Mapper 换成 @Repository,在启动类需要添加注解 @MapperScan("com.atguigu.springcloud.dao")
+
+4. @MapperScan注解使用   
+
 
 
 
