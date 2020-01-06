@@ -24,9 +24,9 @@
 
 ## 2.2 microservicecloud-consumer-dept-80 部门微服务消费者Module   
 ### 2.2.1 RestTemplate   
-RestTemplate提供了多种便捷访问远程Http服务的方法， 是一种简单便捷的访问restful服务模板类，是Spring提供的用于访问Rest服务的**客户端模板工具集**
+RestTemplate提供了多种便捷访问远程Http服务的方法， 是一种简单便捷的访问restful服务模板类，是Spring提供的用于访问Rest服务的**客户端模板工具集**。
 
-RestTemplate提供了多种便捷访问远程Http服务的方法，是一种简单便捷的访问restful服务模板类，是Spring提供的用于访问Rest服务的客户端模板工具集
+RestTemplate提供了多种便捷访问远程Http服务的方法，是一种简单便捷的访问restful服务模板类，是Spring提供的用于访问Rest服务的客户端模板工具集。
 
 使用：   
 使用restTemplate访问restful接口非常的简单粗暴无脑。(url, requestMap, ResponseBean.class)这三个参数分别代表 REST请求地址、请求参数、HTTP响应转换被转换成的对象类型。
@@ -100,14 +100,51 @@ No application available 没有服务被发现 O(∩_∩)O因为没有注册服�
 **需要引入cloud的一个新技术组件，基本上两步走**   
 1. 新增相关maven坐标   
 ```
-
+       <!--eureka-server服务端 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka-server</artifactId>
+        </dependency>
 ```
 2. 在主启动类上面，标注启动该新组件技术的相关注解标签   
 ```
-
+@SpringBootApplication
+@EnableEurekaServer
+public class EurekaServer7001_App {
+    public static void main(String[] args) {
+        SpringApplication.run(EurekaServer7001_App.class, args);
+    }
+}
 ```
 
-### 3.3.1 microservicecloud-eureka-7001 eureka服务注册中心Module   
+### 3.3.2 将已有的部门微服务(microservicecloud-provider-dept-8001)注册进eureka服务中心 microservicecloud-provider-dept-8001   
+1. 修改microservicecloud-provider-dept-8001   
+2. POM（约定 > 配置> 编码）   
+修改部分:   
+```
+       <!-- 将微服务provider侧注册进eureka -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+```
+3. YML   
+修改部分：   
+```
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+```
+4. DeptProvider8001_App主启动类(**@EnableEurekaClient**)   
+5. 测试 先要启动EurekaServer   
+http://localhost:7001/   
+微服务注册名(配置在配置文件中spring:application:name: microservicecloud-dept)
 
 
 
