@@ -32,6 +32,16 @@ injection in your beans. Always use assertions for mandatory dependencies".
 
 意思就是总是使用构造器的方式强制注入。
 
+优化为：   
+```
+   private final DeptDao dao;
+
+    public DeptServiceImpl(DeptDao dao) {
+        this.dao = dao;
+    }
+```
+
+
 依赖注入有三种方式：
 
 * 变量（filed）注入
@@ -48,8 +58,7 @@ injection in your beans. Always use assertions for mandatory dependencies".
 
 构造器注入   
 ```
-    final
-    UserDao userDao;
+    final UserDao userDao;
 
     @Autowired
     public UserServiceImpl(UserDao userDao) {
