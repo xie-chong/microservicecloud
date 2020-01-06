@@ -27,3 +27,15 @@ RestTemplate提供了多种便捷访问远程Http服务的方法，是一种简�
 使用restTemplate访问restful接口非常的简单粗暴无脑。(url, requestMap, ResponseBean.class)这三个参数分别代表 REST请求地址、请求参数、HTTP响应转换被转换成的对象类型。
 
 官网地址:https://docs.spring.io/spring-framework/docs/4.3.7.RELEASE/javadoc-api/org/springframework/web/client/RestTemplate.html
+
+
+### 2.2 构建步骤：   
+1. 新建microservicecloud-consumer-dept-80   
+2. POM（约定 > 配置> 编码）   
+3. YML   
+4. com.atguigu.springcloud.cfgbeans包下ConfigBean的编写（类似spring里面的applicationContext.xml写入的注入Bean）   
+5. com.atguigu.springcloud.controller包下新建DeptController_Consumer部门微服务消费者REST   
+6. DeptConsumer80_App主启动类   
+17. 测试 http://localhost/consumer/dept/get/2   
+http://localhost/consumer/dept/list   
+http://localhost/consumer/dept/add?dname=AI
