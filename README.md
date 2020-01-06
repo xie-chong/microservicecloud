@@ -11,7 +11,7 @@
 6. DeptDao部门接口   
 7. 工程src/main/resources/mybatis目录下新建mapper文件夹后再建DeptMapper.xml   
 8. DeptService部门服务接口   
-9.DeptServiceImpl部门服务接口实现类   
+9. DeptServiceImpl部门服务接口实现类   
 10. DeptController部门微服务提供者REST   
 11. DeptProvider8001_App主启动类DeptProvider8001_App   
 12. 测试 http://localhost:8001/dept/list
@@ -28,6 +28,7 @@ Field injection is not recommended
 Inspection info: Spring Team recommends: "Always use constructor based dependency
 injection in your beans. Always use assertions for mandatory dependencies".
 */
+```
 
 意思就是总是使用构造器的方式强制注入。
 
