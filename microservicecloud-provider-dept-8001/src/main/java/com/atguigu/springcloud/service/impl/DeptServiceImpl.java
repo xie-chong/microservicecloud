@@ -10,17 +10,12 @@ import java.util.List;
 
 @Service
 public class DeptServiceImpl implements DeptService {
-    //@Autowired
-    /*Field injection is not recommended
-    Inspection info: Spring Team recommends: "Always use constructor based dependency
-    injection in your beans. Always use assertions for mandatory dependencies".
-    */
-    private DeptDao dao;
+    private final DeptDao dao;
 
-    @Autowired
     public DeptServiceImpl(DeptDao dao) {
         this.dao = dao;
     }
+
 
     @Override
     public boolean add(Dept dept) {
