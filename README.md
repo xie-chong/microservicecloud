@@ -80,9 +80,13 @@ Eureka Server提供服务注册服务。各个节点启动后，会在EurekaServ
 EurekaClient是一个Java客户端。用于简化Eureka Server的交互，客户端同时也具备一个内置的、使用轮询(round-robin)负载算法的负载均衡器。在应用启动后，将会向Eureka Server发送心跳(默认周期为30秒)。如果Eureka Server在多个心跳周期内没有接收到某个节点的心跳，EurekaServer将会从服务注册表中把这个服务节点移除（默认90秒）
 
 
+### 3.2.2 三大角色   
+* Eureka Server 提供服务注册和发现   
+* Service Provider服务提供方将自身服务注册到Eureka，从而使服务消费方能够找到   
+* Service Consumer服务消费方从Eureka获取注册服务列表，从而能够消费服务   
 
 
-
+## 3.3 构建步骤     
 
 
 
