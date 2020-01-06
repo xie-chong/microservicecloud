@@ -148,6 +148,9 @@ http://localhost:7001/
 
 ### 3.3.3 actuator与注册微服务信息完善   
 1. 主机名称:服务名称修改   
+EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY'RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.
+DS Replicas
+Instances currently registered with Eureka
 
 
 
