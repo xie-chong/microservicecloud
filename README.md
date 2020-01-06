@@ -97,6 +97,8 @@ set方法注入
 暂未解决，不影响系统运行。
 
 
+3. IDEA完美解决 Could not autowire. No beans of 'xxx' type found.报错   
+把 @Mapper 换成 @Repository
 
 
 
