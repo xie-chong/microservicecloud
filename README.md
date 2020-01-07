@@ -342,7 +342,7 @@ Eureka界面出现红字提示："**EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMIN
         this.client = client;
     }
     
-        @RequestMapping(value = "/dept/discovery", method = RequestMethod.GET)
+    @RequestMapping(value = "/dept/discovery", method = RequestMethod.GET)
     public Object discovery() {
         List<String> list = client.getServices();
         System.out.println("**********" + list);
@@ -359,7 +359,7 @@ Eureka界面出现红字提示："**EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMIN
 + 自测 先启动EurekaServer，再启动DeptProvider8001_App.java主启动类，http://localhost:80001/dept/discovery   
 + 修改服务消费者，microservicecloud-consumer-dept-80工程的ConsumerDeptController.java，添加如下代码      
 ```
-/**
+    /**
      * 测试@EnablediscoveryClient,消费端可以调用服务发现
      * @return
      */
