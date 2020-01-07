@@ -16,6 +16,7 @@
     - [3.3.1 microservicecloud-eureka-7001 eureka服务注册中心Module](#3.3.1)
     - [3.3.2 将已有的部门微服务microservicecloud-provider-dept-8001注册进eureka服务中心](#3.3.2)
     - [3.3.3 actuator与注册微服务信息完善](#3.3.3)
+    - [3.3.4 eureka自我保护](#3.3.4)
 
 <!-- /MarkdownTOC -->
 
@@ -238,7 +239,7 @@ eureka:
                 <artifactId>maven-resources-plugin</artifactId>
                 <configuration>
                     <delimiters>
-                        <delimit>$</delimit>
+                        <delimit>@</delimit>
                     </delimiters>
                 </configuration>
             </plugin>
@@ -252,8 +253,8 @@ eureka:
 info:
   app.name: atguigu-microservicecloud
   company.name: www.atguigu.com
-  build.artifactId: $project.artifactId$
-  build.version: $project.version$
+  build.artifactId: @project.artifactId@
+  build.version: @project.version@
 ```
 
 + 3.5 完整application.yml   
@@ -305,11 +306,11 @@ info:
 
 
 
+<h3 id="3.3.4">3.3.4 eureka自我保护</h3>   
 
+Eureka界面出现红字提示："**EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY'RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.**"
 
-
-
-
+导致原因： 某时刻某一个微服务不可用了，eureka不会立刻清理，依旧会对该微服务的信息进行保存
 
 
 
