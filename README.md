@@ -18,20 +18,7 @@
 
 <!-- MarkdownTOC -->
 - [1. 微服务概述与SpringCloud](# 1. 微服务概述与SpringCloud)
-- [2. Rest微服务构建案例工程模块](# 2. Rest微服务构建案例工程模块)
-  - [2.1.1 构建步骤](### 2.1.1 构建步骤)
-  - [2.2 microservicecloud-consumer-dept-80 部门微服务消费者Module](## 2.2 microservicecloud-consumer-dept-80 部门微服务消费者Module)
-    - [2.2.1 RestTemplate](### 2.2.1 RestTemplate)
-    - [2.2.2 构建步骤](### 2.2.2 构建步骤：)
-- [3. Eureka服务注册与发现](# 3. Eureka服务注册与发现)
-  - [3.1 Eureka是什么？](## 3.1 Eureka是什么？)
-  - [3.2 Eureka原理讲解？](## 3.2 Eureka原理讲解？)
-    - [3.2.1 Eureka的基本架构](### 3.2.1 Eureka的基本架构)
-    - [3.2.2 三大角色](### 3.2.2 三大角色)
-  - [3.3 构建步骤](## 3.3 构建步骤)
-    - [3.3.1 microservicecloud-eureka-7001 eureka服务注册中心Module](### 3.3.1 microservicecloud-eureka-7001 eureka服务注册中心Module)
-    - [3.3.2 将已有的部门微服务microservicecloud-provider-dept-8001注册进eureka服务中心](### 3.3.2 将已有的部门微服务microservicecloud-provider-dept-8001注册进eureka服务中心)
-    - [3.3.3 actuator与注册微服务信息完善](### 3.3.3 actuator与注册微服务信息完善)
+
 <!-- /MarkdownTOC -->
 
 
