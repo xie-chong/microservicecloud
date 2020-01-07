@@ -189,6 +189,7 @@ http://localhost:7001/
 <h3 id="3.3.3">3.3.3 actuator与注册微服务信息完善</h3>   
 
 1. 主机名称:服务名称修改   
+
 若在Eureka访问界面，相关服务的Status描述不想使用默认的形式 IP:applicationName:port
 我们可以选择配置一个eureka: instance: instance-id: xxx，之后就显示我们配置的信息。
 
@@ -201,7 +202,7 @@ eureka:
 
 2. 访问信息有IP信息提示   
 
-我的工程不需要修改就默认显示IP。若有需要可以做如下操纵   
+我的工程不需要修改就默认显示IP。若有需要可以做如下操作   
 
 修改服务提供者的YML：   
 ```
@@ -212,15 +213,15 @@ eureka:
 
 3. 微服务info内容详细信息   
 
-3.1 当前问题：超链接点击服务报告ErrorPage   
-3.2 修改服务提供者POM   
++ 3.1 当前问题：超链接点击服务报告ErrorPage   
++ 3.2 修改服务提供者POM(microservicecloud-provider-dept-8001)   
 ```
 <dependency>
        <groupId>org.springframework.boot</groupId>
        <artifactId>spring-boot-starter-actuator</artifactId>
 </dependency>
 ```
-3.4 总的父工程microservicecloud修改pom.xml添加构建build信息   
++ 3.3 总的父工程microservicecloud修改pom.xml添加构建build信息   
 ```
     <build>
         <finalName>microservicecloud</finalName>
@@ -246,7 +247,7 @@ eureka:
     </build>
 ```
 
-3.5 修改服务提供者YML    
++ 3.4 修改服务提供者YML    
 ```
 info:
   app.name: atguigu-microservicecloud
