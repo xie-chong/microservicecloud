@@ -17,6 +17,7 @@
     - [3.3.2 将已有的部门微服务microservicecloud-provider-dept-8001注册进eureka服务中心](#3.3.2)
     - [3.3.3 actuator与注册微服务信息完善](#3.3.3)
     - [3.3.4 eureka自我保护](#3.3.4)
+    - [3.3.5 microservicecloud-provider-dept-8001服务发现Discovery](#3.3.5)
   - [3.4 集群配置](#3.4)
 
 <!-- /MarkdownTOC -->
@@ -326,6 +327,48 @@ Eureka界面出现红字提示："**EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMIN
  
 在Spring Cloud中，可以使用**eureka.server.enable-self-preservation = false** 禁用自我保护模式。
 
+
+<h3 id="3.3.5">3.3.5 microservicecloud-provider-dept-8001服务发现Discovery</h3>   
+
+对于注册经Eureka里面的微服务，可以通过服务发现来获得该服务的信息。
+
+**具体操作步骤**：
++ 修改microservicecloud-provider-dept-8001工程的DeptController.java
+```
+    private final DiscoveryClient client;
+
+    public DeptController(DeptService service, @Qualifier("discoveryClient") DiscoveryClient client) {
+        this.service = service;
+        this.client = client;
+    }
+    
+        @RequestMapping(value = "/dept/discovery", method = RequestMethod.GET)
+    public Object discovery() {
+        List<String> list = client.getServices();
+        System.out.println("**********" + list);
+
+        List<ServiceInstance> srvList = client.getInstances("MICROSERVICECLOUD-DEPT");
+        for (ServiceInstance element : srvList) {
+            System.out.println(element.getServiceId() + "\t" + element.getHost() + "\t" + element.getPort() + "\t"
+                    + element.getUri());
+        }
+        return this.client;
+    }
+```
++ 修改服务提供者，DeptProvider8001_App.java主启动类，添加注解标签**@EnableDiscoveryClient**   
++ 自测 先启动EurekaServer，再启动DeptProvider8001_App.java主启动类，http://localhost:80001/dept/discovery   
++ 修改服务消费者，microservicecloud-consumer-dept-80工程的ConsumerDeptController.java，添加如下代码      
+```
+/**
+     * 测试@EnablediscoveryClient,消费端可以调用服务发现
+     * @return
+     */
+    @RequestMapping(value = "/consumer/dept/discovery")
+    public Object discovery() {
+        return restTemplate.getForObject(REST_URL_PREFIX + "/dept/discovery", Object.class);
+    }
+```
++ 自测 启动消费者，访问http://localhost:80/consumer/dept/discovery
  
 <h2 id="3.4">3.4 集群配置</h2>   
 
