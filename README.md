@@ -4,8 +4,9 @@
 - [1. 微服务概述与SpringCloud](#1)
 - [2. Rest微服务构建案例工程模块](#2)
   - [2.3 microservicecloud-consumer-dept-80部门微服务消费者Module](##2.3)
-      - [2.3.1 RestTemplate](###2.3.1)
-      - [2.3.2 构建步骤](###2.3.2)
+  - [2.4 microservicecloud-consumer-dept-80 部门微服务消费者Module](##2.4)
+    - [2.4.1 RestTemplate](###2.4.1)
+    - [2.4.2 构建步骤](###2.4.2)
 - [3. Eureka服务注册与发现](#3)
   - [3.1 Eureka是什么？](##3.1)
   - [3.2 Eureka原理讲解？](##3.2)
@@ -48,8 +49,8 @@
 12. 测试 http://localhost:8001/dept/list
 
 
-## 2.2microservicecloud-consumer-dept-80 部门微服务消费者Module   
-### 2.2.1RestTemplate   
+<h2 id="2.4">2.4 microservicecloud-consumer-dept-80 部门微服务消费者Module </h2>   
+<h3 id="2.4.1">2.4.1 RestTemplate</h3>     
 RestTemplate提供了多种便捷访问远程Http服务的方法， 是一种简单便捷的访问restful服务模板类，是Spring提供的用于访问Rest服务的**客户端模板工具集**。
 
 RestTemplate提供了多种便捷访问远程Http服务的方法，是一种简单便捷的访问restful服务模板类，是Spring提供的用于访问Rest服务的客户端模板工具集。
@@ -60,7 +61,7 @@ RestTemplate提供了多种便捷访问远程Http服务的方法，是一种简�
 官网地址:https://docs.spring.io/spring-framework/docs/4.3.7.RELEASE/javadoc-api/org/springframework/web/client/RestTemplate.html
 
 
-### 2.2.2构建步骤   
+<h3 id="2.4.2">2.4.2 构建步骤</h3>   
 1. 新建microservicecloud-consumer-dept-80   
 2. POM（约定 > 配置> 编码）   
 3. YML   
