@@ -1,6 +1,3 @@
-
-# 01、【初级架构搭建】SpringCloud从零搭建微服务架构视频教程
-
 <!-- MarkdownTOC -->
 - [1. 微服务概述与SpringCloud](# 1. 微服务概述与SpringCloud)
 - [2. Rest微服务构建案例工程模块](# 2. Rest微服务构建案例工程模块)
@@ -24,6 +21,7 @@
 ---
 
 
+# 01、【初级架构搭建】SpringCloud从零搭建微服务架构视频教程
 
 
 # 1. 微服务概述与SpringCloud   
