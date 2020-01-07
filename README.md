@@ -2,6 +2,20 @@
 <!-- MarkdownTOC -->
 
 - [1. 微服务概述与SpringCloud](#1.微服务概述与SpringCloud)
+- [2. Rest微服务构建案例工程模块](#2.Rest微服务构建案例工程模块)
+  - [2.1.1 构建步骤](###2.1.1构建步骤)
+  - [2.2 microservicecloud-consumer-dept-80部门微服务消费者Module](##2.2microservicecloud-consumer-dept-80部门微服务消费者Module)
+    - [2.2.1 RestTemplate](###2.2.1RestTemplate)
+    - [2.2.2 构建步骤](###2.2.2构建步骤)
+- [3. Eureka服务注册与发现](#3.Eureka服务注册与发现)
+  - [3.1 Eureka是什么？](##3.1Eureka是什么？)
+  - [3.2 Eureka原理讲解？](##3.2Eureka原理讲解？)
+    - [3.2.1 Eureka的基本架构](###3.2.1Eureka的基本架构)
+    - [3.2.2 三大角色](###3.2.2三大角色)
+  - [3.3 构建步骤](##3.3构建步骤)
+    - [3.3.1 microservicecloud-eureka-7001 eureka服务注册中心Module](###3.3.1microservicecloud-eureka-7001eureka服务注册中心Module)
+    - [3.3.2 将已有的部门微服务microservicecloud-provider-dept-8001注册进eureka服务中心](###3.3.2将已有的部门微服务microservicecloud-provider-dept-8001注册进eureka服务中心)
+    - [3.3.3 actuator与注册微服务信息完善](###3.3.3actuator与注册微服务信息完善)
 
 <!-- /MarkdownTOC -->
 
@@ -18,11 +32,11 @@
 # 1.微服务概述与SpringCloud   
 
 
-# 2. Rest微服务构建案例工程模块   
+# 2.Rest微服务构建案例工程模块   
 
-## 2.1 microservicecloud-provider-dept-8001 部门微服务提供者Module
+## 2.1microservicecloud-provider-dept-8001 部门微服务提供者Module
 
-### 2.1.1 构建步骤   
+### 2.1.1构建步骤   
 1. 新建microservicecloud-provider-dept-8001（创建完成后请回到父工程查看pom文件变化）   
 2. POM（约定 > 配置> 编码）   
 3. YML   
@@ -37,8 +51,8 @@
 12. 测试 http://localhost:8001/dept/list
 
 
-## 2.2 microservicecloud-consumer-dept-80 部门微服务消费者Module   
-### 2.2.1 RestTemplate   
+## 2.2microservicecloud-consumer-dept-80 部门微服务消费者Module   
+### 2.2.1RestTemplate   
 RestTemplate提供了多种便捷访问远程Http服务的方法， 是一种简单便捷的访问restful服务模板类，是Spring提供的用于访问Rest服务的**客户端模板工具集**。
 
 RestTemplate提供了多种便捷访问远程Http服务的方法，是一种简单便捷的访问restful服务模板类，是Spring提供的用于访问Rest服务的客户端模板工具集。
@@ -49,7 +63,7 @@ RestTemplate提供了多种便捷访问远程Http服务的方法，是一种简�
 官网地址:https://docs.spring.io/spring-framework/docs/4.3.7.RELEASE/javadoc-api/org/springframework/web/client/RestTemplate.html
 
 
-### 2.2.2 构建步骤   
+### 2.2.2构建步骤   
 1. 新建microservicecloud-consumer-dept-80   
 2. POM（约定 > 配置> 编码）   
 3. YML   
