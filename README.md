@@ -40,6 +40,7 @@
 
 <h2 id="2.3">2.3 microservicecloud-provider-dept-8001 部门微服务提供者Module</h2>   
 <h3 id="2.3.1">2.3.1 构建步骤</h3>   
+
 1. 新建microservicecloud-provider-dept-8001（创建完成后请回到父工程查看pom文件变化）   
 2. POM（约定 > 配置> 编码）   
 3. YML   
@@ -67,6 +68,7 @@ RestTemplate提供了多种便捷访问远程Http服务的方法，是一种简�
 
 
 <h3 id="2.4.2">2.4.2 构建步骤</h3>   
+
 1. 新建microservicecloud-consumer-dept-80   
 2. POM（约定 > 配置> 编码）   
 3. YML   
@@ -115,6 +117,7 @@ Eureka 采用了 C-S 的设计架构。Eureka Server 作为服务注册功能的
 
 
 <h3 id="3.2.2">3.2.2 三大角色 </h3>   
+
 * Eureka Server 提供服务注册和发现   
 * Service Provider服务提供方将自身服务注册到Eureka，从而使服务消费方能够找到   
 * Service Consumer服务消费方从Eureka获取注册服务列表，从而能够消费服务   
@@ -123,6 +126,7 @@ Eureka 采用了 C-S 的设计架构。Eureka Server 作为服务注册功能的
 <h2 id="3.3">3.3 构建步骤</h2>   
 
 <h3 id="3.3.1">3.3.1 microservicecloud-eureka-7001 eureka服务注册中心Module</h3>   
+
 1. 新建microservicecloud-eureka-7001   
 2. POM（约定 > 配置> 编码）   
 3. YML(需要暴露服务注册地址)   
@@ -152,6 +156,7 @@ public class EurekaServer7001_App {
 ```
 
 <h3 id="3.3.2">3.3.2 将已有的部门微服务 microservicecloud-provider-dept-8001 注册进eureka服务中心</h3>   
+
 1. 修改microservicecloud-provider-dept-8001   
 2. POM（约定 > 配置> 编码）   
 修改部分:   
@@ -181,6 +186,7 @@ http://localhost:7001/
 微服务注册名(配置在配置文件中spring:application:name: microservicecloud-dept)
 
 <h3 id="3.3.3">3.3.3 actuator与注册微服务信息完善</h3>   
+
 1. 主机名称:服务名称修改   
 EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY'RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.
 DS Replicas
