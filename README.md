@@ -8,14 +8,14 @@
     - [2.4.1 RestTemplate](#2.4.1)
     - [2.4.2 构建步骤](#2.4.2)
 - [3. Eureka服务注册与发现](#3)
-  - [3.1 Eureka是什么？](##3.1)
-  - [3.2 Eureka原理讲解？](##3.2)
-    - [3.2.1 Eureka的基本架构](###3.2.1)
-    - [3.2.2 三大角色](###3.2.2)
-  - [3.3 构建步骤](##3.3)
-    - [3.3.1 microservicecloud-eureka-7001 eureka服务注册中心Module](###3.3.1)
-    - [3.3.2 将已有的部门微服务microservicecloud-provider-dept-8001注册进eureka服务中心](###3.3.2)
-    - [3.3.3 actuator与注册微服务信息完善](###3.3.3)
+  - [3.1 Eureka是什么？](#3.1)
+  - [3.2 Eureka原理讲解？](#3.2)
+    - [3.2.1 Eureka的基本架构](#3.2.1)
+    - [3.2.2 三大角色](#3.2.2)
+  - [3.3 构建步骤](#3.3)
+    - [3.3.1 microservicecloud-eureka-7001 eureka服务注册中心Module](#3.3.1)
+    - [3.3.2 将已有的部门微服务microservicecloud-provider-dept-8001注册进eureka服务中心](#3.3.2)
+    - [3.3.3 actuator与注册微服务信息完善](#3.3.3)
 
 <!-- /MarkdownTOC -->
 
@@ -28,10 +28,15 @@
 
 
 
-
+---
 <h1 id="1">1.微服务概述与SpringCloud</h1>   
 
+---
+
+---
 <h1 id="2">2.Rest微服务构建案例工程模块</h1>
+
+---
 
 <h2 id="2.3">2.3 microservicecloud-provider-dept-8001 部门微服务提供者Module</h2>   
 <h3 id="2.3.1">2.3.1 构建步骤</h3>   
@@ -73,18 +78,20 @@ http://localhost/consumer/dept/list
 http://localhost/consumer/dept/add?dname=AI
 
 
+--- 
+<h1 id="3">3. Eureka服务注册与发现</h1>
 
-# 3. Eureka服务注册与发现   
+---
 
-## 3.1 Eureka是什么？   
+<h2 id="3.1">3.1 Eureka是什么？</h2>   
 Eureka是Netflix的一个子模块，也是核心模块之一。Eureka是一个基于REST的服务，用于定位服务，以实现云端中间层服务发现和故障转移。
 
 服务注册与发现对于微服务架构来说是非常重要的，有了服务发现与注册，**只需要使用服务的标识符，就可以访问到服务**，而不需要修改服务调用的配置文件了。**功能类似于dubbo的注册中心，比如Zookeeper**。
 
 
-## 3.2 Eureka原理讲解？   
+<h2 id="3.2">3.2 Eureka原理讲解？</h2>   
 
-### 3.2.1 Eureka的基本架构   
+<h3 id="3.2.1">3.2.1 Eureka的基本架构</h3>   
 
 Spring Cloud 封装了 Netflix 公司开发的 Eureka 模块来**实现服务注册和发现**(请对比Zookeeper)。
 
@@ -107,15 +114,15 @@ Eureka 采用了 C-S 的设计架构。Eureka Server 作为服务注册功能的
 **EurekaClient是一个Java客户端**。用于简化Eureka Server的交互，客户端同时也具备一个内置的、使用轮询(round-robin)负载算法的负载均衡器。在应用启动后，将会向Eureka Server发送心跳(默认周期为30秒)。如果Eureka Server在多个心跳周期内没有接收到某个节点的心跳，EurekaServer将会从服务注册表中把这个服务节点移除（默认90秒）。
 
 
-### 3.2.2 三大角色   
+<h3 id="3.2.2">3.2.2 三大角色 </h3>   
 * Eureka Server 提供服务注册和发现   
 * Service Provider服务提供方将自身服务注册到Eureka，从而使服务消费方能够找到   
 * Service Consumer服务消费方从Eureka获取注册服务列表，从而能够消费服务   
 
 
-## 3.3 构建步骤     
+<h2 id="3.3">3.3 构建步骤</h2>   
 
-### 3.3.1 microservicecloud-eureka-7001 eureka服务注册中心Module   
+<h3 id="3.3.1">3.3.1 microservicecloud-eureka-7001 eureka服务注册中心Module</h3>   
 1. 新建microservicecloud-eureka-7001   
 2. POM（约定 > 配置> 编码）   
 3. YML(需要暴露服务注册地址)   
@@ -144,7 +151,7 @@ public class EurekaServer7001_App {
 }
 ```
 
-### 3.3.2 将已有的部门微服务(microservicecloud-provider-dept-8001)注册进eureka服务中心   
+<h3 id="3.3.2">3.3.2 将已有的部门微服务 microservicecloud-provider-dept-8001 注册进eureka服务中心</h3>   
 1. 修改microservicecloud-provider-dept-8001   
 2. POM（约定 > 配置> 编码）   
 修改部分:   
@@ -173,7 +180,7 @@ eureka:
 http://localhost:7001/   
 微服务注册名(配置在配置文件中spring:application:name: microservicecloud-dept)
 
-### 3.3.3 actuator与注册微服务信息完善   
+<h3 id="3.3.3">3.3.3 actuator与注册微服务信息完善</h3>   
 1. 主机名称:服务名称修改   
 EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY'RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.
 DS Replicas
