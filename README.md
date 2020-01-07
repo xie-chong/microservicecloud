@@ -15,7 +15,7 @@
     - [3.2.2 三大角色](### 3.2.2 三大角色)
   - [3.3 构建步骤](## 3.3 构建步骤)
     - [3.3.1 microservicecloud-eureka-7001 eureka服务注册中心Module](### 3.3.1 microservicecloud-eureka-7001 eureka服务注册中心Module)
-    - [3.3.2 将已有的部门微服务(microservicecloud-provider-dept-8001)注册进eureka服务中心](### 3.3.2 将已有的部门微服务(microservicecloud-provider-dept-8001)注册进eureka服务中心)
+    - [3.3.2 将已有的部门微服务microservicecloud-provider-dept-8001注册进eureka服务中心](### 3.3.2 将已有的部门微服务microservicecloud-provider-dept-8001注册进eureka服务中心)
     - [3.3.3 actuator与注册微服务信息完善](### 3.3.3 actuator与注册微服务信息完善)
 
 
