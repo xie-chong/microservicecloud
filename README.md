@@ -2,24 +2,10 @@
 <!-- MarkdownTOC -->
 
 - [1. 微服务概述与SpringCloud](#1.微服务概述与SpringCloud)
-- [底层数据结构分析](#底层数据结构分析)
-  - [JDK1.8之前](#jdk18之前)
-    - 1. aa
-    - 2. bb
-  - [JDK1.8之后](#jdk18之后)
-- [HashMap源码分析](#hashmap源码分析)
-  - [构造方法](#构造方法)
-  - [put方法](#put方法)
-  - [get方法](#get方法)
-  - [resize方法](#resize方法)
-- [HashMap常用方法测试](#hashmap常用方法测试)
 
 <!-- /MarkdownTOC -->
 
-<!-- MarkdownTOC -->
-- [1. 微服务概述与SpringCloud](# 1. 微服务概述与SpringCloud)
 
-<!-- /MarkdownTOC -->
 
 
 ---
@@ -29,7 +15,7 @@
 # 01、【初级架构搭建】SpringCloud从零搭建微服务架构视频教程
 
 
-# 1. 微服务概述与SpringCloud   
+# 1.微服务概述与SpringCloud   
 
 
 # 2. Rest微服务构建案例工程模块   
