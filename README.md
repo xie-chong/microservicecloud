@@ -56,7 +56,8 @@
 
 
 <h2 id="2.4">2.4 microservicecloud-consumer-dept-80 部门微服务消费者Module </h2>   
-<h3 id="2.4.1">2.4.1 RestTemplate</h3>     
+<h3 id="2.4.1">2.4.1 RestTemplate</h3>    
+
 RestTemplate提供了多种便捷访问远程Http服务的方法， 是一种简单便捷的访问restful服务模板类，是Spring提供的用于访问Rest服务的**客户端模板工具集**。
 
 RestTemplate提供了多种便捷访问远程Http服务的方法，是一种简单便捷的访问restful服务模板类，是Spring提供的用于访问Rest服务的客户端模板工具集。
