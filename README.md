@@ -355,7 +355,7 @@ Eureka界面出现红字提示："**EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMIN
         return this.client;
     }
 ```
-+ 修改服务提供者，DeptProvider8001_App.java主启动类，添加注解标签**@EnableDiscoveryClient**   
++ 修改服务提供者，DeptProvider8001_App.java主启动类，添加注解标签@**EnableDiscoveryClient**   
 + 自测 先启动EurekaServer，再启动DeptProvider8001_App.java主启动类，http://localhost:80001/dept/discovery   
 + 修改服务消费者，microservicecloud-consumer-dept-80工程的ConsumerDeptController.java，添加如下代码      
 ```
@@ -373,7 +373,17 @@ Eureka界面出现红字提示："**EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMIN
 <h2 id="3.4">3.4 集群配置</h2>   
 
 
+修改映射配置
+    找到C:\Windows\System32\drivers\etc路径下的hosts文件
+    修改映射配置添加进hosts文件
+      127.0.0.1 eureka7001.com	
+      127.0.0.1 eureka7002.com
+      127.0.0.1 eureka7003.com
 
+3台eureka服务器的yml配置
+    7001  7002  7003
+
+microservicecloud-provider-dept-8001微服务发布到上面3台eureka集群配置中
 
 
 
