@@ -189,17 +189,71 @@ http://localhost:7001/
 <h3 id="3.3.3">3.3.3 actuator与注册微服务信息完善</h3>   
 
 1. 主机名称:服务名称修改   
-EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY'RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.
-DS Replicas
-Instances currently registered with Eureka
+若在Eureka访问界面，相关服务的Status描述不想使用默认的形式 IP:applicationName:port
+我们可以选择配置一个eureka: instance: instance-id: xxx，之后就显示我们配置的信息。
 
-
+修改服务提供者的YML：   
+```
+eureka:
+  instance:
+    instance-id: microservicecloud-dept8001
+```
 
 2. 访问信息有IP信息提示   
 
+我的工程不需要修改就默认显示IP。若有需要可以做如下操纵   
+
+修改服务提供者的YML：   
+```
+eureka:
+  instance:
+    prefer-ip-address: true
+```
 
 3. 微服务info内容详细信息   
 
+3.1 当前问题：超链接点击服务报告ErrorPage   
+3.2 修改服务提供者POM   
+```
+<dependency>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+```
+3.4 总的父工程microservicecloud修改pom.xml添加构建build信息   
+```
+    <build>
+        <finalName>microservicecloud</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <delimiters>
+                        <delimit>$</delimit>
+                    </delimiters>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+```
+
+3.5 修改服务提供者YML    
+```
+info:
+  app.name: atguigu-microservicecloud
+  company.name: www.atguigu.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+```
 
 
 
