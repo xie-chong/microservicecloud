@@ -302,6 +302,8 @@ info:
   build.version: @project.version@
 ```
 
+<p align="center">配置信息显示效果</p>  
+
 ![](src/main/resources/img/Yml-Config-Eureka.png)   
 
 
