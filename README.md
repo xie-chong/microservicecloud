@@ -1,21 +1,21 @@
-
+# 01、【初级架构搭建】SpringCloud从零搭建微服务架构视频教程   
 <!-- MarkdownTOC -->
 
 - [1. 微服务概述与SpringCloud](#1)
 - [2. Rest微服务构建案例工程模块](#2)
-  - [2.1.1 构建步骤](###2.1.1构建步骤)
-  - [2.2 microservicecloud-consumer-dept-80部门微服务消费者Module](##2.2microservicecloud-consumer-dept-80部门微服务消费者Module)
-    - [2.2.1 RestTemplate](###2.2.1RestTemplate)
-    - [2.2.2 构建步骤](###2.2.2构建步骤)
-- [3. Eureka服务注册与发现](#3.Eureka服务注册与发现)
-  - [3.1 Eureka是什么？](##3.1Eureka是什么？)
-  - [3.2 Eureka原理讲解？](##3.2Eureka原理讲解？)
-    - [3.2.1 Eureka的基本架构](###3.2.1Eureka的基本架构)
-    - [3.2.2 三大角色](###3.2.2三大角色)
-  - [3.3 构建步骤](##3.3构建步骤)
-    - [3.3.1 microservicecloud-eureka-7001 eureka服务注册中心Module](###3.3.1microservicecloud-eureka-7001eureka服务注册中心Module)
-    - [3.3.2 将已有的部门微服务microservicecloud-provider-dept-8001注册进eureka服务中心](###3.3.2将已有的部门微服务microservicecloud-provider-dept-8001注册进eureka服务中心)
-    - [3.3.3 actuator与注册微服务信息完善](###3.3.3actuator与注册微服务信息完善)
+  - [2.1.1 构建步骤](###2.1.1)
+  - [2.2 microservicecloud-consumer-dept-80部门微服务消费者Module](##2.2)
+    - [2.2.1 RestTemplate](###2.2.1)
+    - [2.2.2 构建步骤](###2.2.2)
+- [3. Eureka服务注册与发现](#3)
+  - [3.1 Eureka是什么？](##3.1)
+  - [3.2 Eureka原理讲解？](##3.2)
+    - [3.2.1 Eureka的基本架构](###3.2.1)
+    - [3.2.2 三大角色](###3.2.2)
+  - [3.3 构建步骤](##3.3)
+    - [3.3.1 microservicecloud-eureka-7001 eureka服务注册中心Module](###3.3.1)
+    - [3.3.2 将已有的部门微服务microservicecloud-provider-dept-8001注册进eureka服务中心](###3.3.2)
+    - [3.3.3 actuator与注册微服务信息完善](###3.3.3)
 
 <!-- /MarkdownTOC -->
 
@@ -26,16 +26,15 @@
 ---
 
 
-# 01、【初级架构搭建】SpringCloud从零搭建微服务架构视频教程
+
 
 
 <h1 id="1">1.微服务概述与SpringCloud</h2>   
 
 <h1 id="2">2.Rest微服务构建案例工程模块</h2>
 
-## 2.1microservicecloud-provider-dept-8001 部门微服务提供者Module
-
-### 2.1.1构建步骤   
+<h2 id="2.1">2.1 microservicecloud-provider-dept-8001 部门微服务提供者Module</h2>   
+<h3 id="2.1.1">2.1.1 构建步骤</h3>   
 1. 新建microservicecloud-provider-dept-8001（创建完成后请回到父工程查看pom文件变化）   
 2. POM（约定 > 配置> 编码）   
 3. YML   
