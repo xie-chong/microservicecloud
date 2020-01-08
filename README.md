@@ -539,7 +539,85 @@ Ribbon和Eureka整合后Consumer可以直接调用服务而不用再关心地址
 ```
 
 
+<h2 id="4.3">4.3 Ribbon负载均衡</h2>
 
+#### 架构说明
+
+Ribbon在工作时分成两步:   
+1. 先选择 EurekaServer ,它优先选择在同一个区域内负载较少的server。
+2. 再根据用户指定的策略，在从server取到的服务注册列表中选择一个地址。
+
+其中Ribbon提供了多种策略：比如轮询、随机和根据响应时间加权。
+
+#### 多服务实例构建步骤
+1. 参考服务提供者microservicecloud-provider-dept-8001，新建两份，分别命名为8002，8003
+2. 新建8002/8003服务对应的数据库（cloudDB02、cloudDB03），各自微服务分别连各自的数据库
+3. 修改8002/8003各自YML（端口、数据库连接、eureka.instance.instance-id）
+
+```
+# 变化部分
+server:
+  port: 8001
+
+ datasource:
+    url: jdbc:mysql://localhost:3306/cloudDB02
+
+eureka:
+  instance:
+    instance-id: microservicecloud-dept8002   #自定义服务名称信息
+
+# 完整内容
+
+server:
+  port: 8002
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
+  type-aliases-package: com.atguigu.springcloud.entities    # 所有Entity别名类所在包
+  mapper-locations:
+    - classpath:mybatis/mapper/**/*.xml                       # mapper映射文件
+
+spring:
+  application:
+    name: microservicecloud-dept
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
+    driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包
+    url: jdbc:mysql://localhost:3306/cloudDB02?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&useSSL=false&serverTimezone=UTC              # 数据库名称。各自微服务分别连各自的数据库。
+    username: root
+    password: xxxx
+
+    dbcp2:
+      min-idle: 5                                           # 数据库连接池的最小维持连接数
+      initial-size: 5                                       # 初始化连接数
+      max-total: 5                                          # 最大连接数
+      max-wait-millis: 200                                  # 等待连接获取的最大超时时间
+
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+  instance:
+    instance-id: microservicecloud-dept8002   #自定义服务名称信息
+    prefer-ip-address: true     #访问路径可以显示IP地址
+
+info:
+  app.name: atguigu-microservicecloud
+  company.name: www.atguigu.com
+  build.artifactId: @project.artifactId@
+  build.version: @project.version@
+```
+4. 启动3个eureka集群配置区
+5. 启动3个Dept微服务,并各自测试通过
+
+```
+http://localhost:8001/dept/list
+http://localhost:8002/dept/list
+http://localhost:8003/dept/list
+```
+6. 启动消费者microservicecloud-consumer-dept-80
+7. 客户端通过Ribbo完成负载均衡并访问上一步的Dept微服务
 
 
 
