@@ -475,7 +475,7 @@ Ribbon就属于进程内LB，它只是一个类库，集成于消费方进程，
 
 <h2 id="4.2">4.2 Ribbon配置初步</h2>
 
-操作步骤：
+**操作步骤**：
 1. 修改消费者microservicecloud-consumer-dept-80工程
 2. 修改pom.xml文件，添加如下内容
 ```
