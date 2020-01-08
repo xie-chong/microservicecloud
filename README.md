@@ -617,8 +617,20 @@ http://localhost:8002/dept/list
 http://localhost:8003/dept/list
 ```
 6. 启动消费者microservicecloud-consumer-dept-80
-7. 客户端通过Ribbo完成负载均衡并访问上一步的Dept微服务
+7. 客户端通过Ribbon完成负载均衡并访问上一步的Dept微服务(**注意观察看到返回的数据库名字，各不相同，负载均衡实现**)
+```
+http://localhost/consumer/dept/list
+```
+8. 总结
+Ribbon其实就是一个**软负载均衡的客户端组件**，他可以和其他所需请求的客户端结合使用，和eureka结合只是其中的一个实例。
 
+**注意**   
+对外暴露的统一的服务实例名,8001/8002/8003三个名字都要一样
+```
+spring:
+  application:
+    name: microservicecloud-dept
+```
 
 
 
