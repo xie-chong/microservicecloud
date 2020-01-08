@@ -617,7 +617,7 @@ http://localhost:8002/dept/list
 http://localhost:8003/dept/list
 ```
 6. 启动消费者microservicecloud-consumer-dept-80
-7. 客户端通过Ribbon完成负载均衡并访问上一步的Dept微服务(**注意观察看到返回的数据库名字，各不相同，负载均衡实现**)
+7. 客户端通过Ribbon完成负载均衡并访问上一步的Dept微服务(**注意观察返回的数据库名字，若各不相同，则负载均衡实现**)
 ```
 http://localhost/consumer/dept/list
 ```
