@@ -552,7 +552,7 @@ Ribbon在工作时分成两步:
 #### 4.3.2 多服务实例构建步骤
 1. 参考服务提供者microservicecloud-provider-dept-8001，新建两份，分别命名为8002，8003
 2. 新建8002/8003服务对应的数据库（cloudDB02、cloudDB03），各自微服务分别连各自的数据库
-3. 修改8002/8003各自YML（端口、数据库连接、eureka.instance.instance-id）
+3. 修改8002/8003各自YML（端口、数据库连接、eureka.instance.instance-id）   
 变化部分   
 ```
 server:
@@ -621,11 +621,10 @@ http://localhost:8003/dept/list
 ```
 http://localhost/consumer/dept/list
 ```
-8. 总结
+8. 总结   
 Ribbon其实就是一个**软负载均衡的客户端组件**，他可以和其他所需请求的客户端结合使用，和eureka结合只是其中的一个实例。
 
-**注意**   
-对外暴露的统一的服务实例名,8001/8002/8003三个名字都要一样
+**注意**: 对外暴露的统一的服务实例名,8001/8002/8003三个名字都要一样
 ```
 spring:
   application:
