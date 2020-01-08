@@ -460,9 +460,9 @@ Spring Cloud Ribbon是基于Netflix Ribbon实现的一套**客户端负载均衡
 <h3 id="4.1.2">4.1.2 能干嘛？</h3>
 
 **LB**，即**负载均衡(Load Balance)**，在微服务或分布式集群中经常用的一种应用。
-* **集中式LB**
+* **集中式LB**    
 即在服务的消费方和提供方之间使用独立的LB设施(可以是硬件，如F5, 也可以是软件，如nginx), 由该设施负责把访问请求通过某种策略转发至服务的提供方；
-* **进程内LB**
+* **进程内LB**      
 将LB逻辑集成到消费方，消费方从服务注册中心获知有哪些地址可用，然后自己再从这些地址中选择出一个合适的服务器。
 Ribbon就属于进程内LB，它只是一个类库，集成于消费方进程，消费方通过它来获取到服务提供方的地址。
 
@@ -501,7 +501,7 @@ eureka:
     service-url:
       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/  # Eureka的服务注册地址
 ```
-4. 对ConfigBean进行新注解@LoadBalanced 获得Rest时加入Ribbon的配置
+4. 对ConfigBean进行新注解@**LoadBalanced** 获得Rest时加入Ribbon的配置
 ```
     @Bean
     @LoadBalanced
@@ -528,7 +528,7 @@ http://localhost/consumer/dept/get/1
 http://localhost/consumer/dept/list
 http://localhost/consumer/dept/add?dname=大数据部
 ```
-10. 小总结
+10. 小总结   
 Ribbon和Eureka整合后Consumer可以直接调用服务而不用再关心地址和端口号
 ```
      // 通过微服务名字从Eureka上找到并访问
