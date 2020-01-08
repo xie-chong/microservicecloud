@@ -10,7 +10,9 @@ import java.util.List;
 
 @RestController
 public class ConsumerDeptController {
-    private static final String REST_URL_PREFIX = "http://localhost:8001";
+    //    private static final String REST_URL_PREFIX = "http://localhost:8001";
+    // 通过微服务名字从Eureka上找到并访问
+    private static final String REST_URL_PREFIX = "http://MICROSERVICECLOUD-DEPT";
 
     private final RestTemplate restTemplate;
 
@@ -36,6 +38,7 @@ public class ConsumerDeptController {
 
     /**
      * 测试@EnablediscoveryClient,消费端可以调用服务发现
+     *
      * @return Object
      */
     @RequestMapping(value = "/consumer/dept/discovery")
