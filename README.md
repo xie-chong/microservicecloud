@@ -543,7 +543,9 @@ Ribbon和Eureka整合后Consumer可以直接调用服务而不用再关心地址
 
 #### 4.3.1 架构说明
 
-![]()   
+<p align="center">Ribbon架构图</p>  
+
+![](src/main/resources/img/Ribbon-architecture.jpg)   
 
 Ribbon在工作时分成两步:   
 1. 先选择 EurekaServer ,它优先选择在同一个区域内负载较少的server。
