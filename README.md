@@ -19,6 +19,7 @@
     - [3.3.4 eureka自我保护](#3.3.4)
     - [3.3.5 microservicecloud-provider-dept-8001服务发现Discovery](#3.3.5)
   - [3.4 集群配置](#3.4)
+-[4. Ribbon负载均衡](#4)
 
 <!-- /MarkdownTOC -->
 
@@ -372,19 +373,6 @@ Eureka界面出现红字提示："**EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMIN
  
 <h2 id="3.4">3.4 集群配置</h2>   
 
-
-修改映射配置
-    找到C:\Windows\System32\drivers\etc路径下的hosts文件
-    修改映射配置添加进hosts文件
-      127.0.0.1 eureka7001.com	
-      127.0.0.1 eureka7002.com
-      127.0.0.1 eureka7003.com
-
-3台eureka服务器的yml配置
-    7001  7002  7003
-
-microservicecloud-provider-dept-8001微服务发布到上面3台eureka集群配置中
-
 #### 操作步骤
 
 + 1. 新建microservicecloud-eureka-7002/microservicecloud-eureka-7003   
@@ -421,5 +409,18 @@ eureka:
       # defaultZone: http://localhost:7001/eureka   # 单机修改为集群配置
       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
 ```
+
+
+
+---
+<h1 id="4">4. Ribbon负载均衡</h1>   
+
+---
+
+
+
+
+
+
 
 
