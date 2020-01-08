@@ -21,7 +21,15 @@
   - [3.4 集群配置](#3.4)
   - [3.5 作为服务注册中心，Eureka比Zookeeper好在哪里？](#3.5)
 - [4. Ribbon负载均衡](#4)
-
+  - [4.1 概述](#4.1)
+    - [4.1.1 是什么？](#4.1.1)
+    - [4.1.2 能干嘛？](#4.1.2)
+  - [4.2 Ribbon配置初步](#4.2)
+  - [4.3 Ribbon负载均衡](#4.3)
+  
+  
+  
+  
 <!-- /MarkdownTOC -->
 
 
@@ -438,6 +446,109 @@ Eureka作为单纯的服务注册中心来说要比zookeeper更加“专业”�
 <h1 id="4">4. Ribbon负载均衡</h1>   
 
 ---
+
+<h2 id="4.1">4.1 概述</h2>
+
+<h3 id="4.1.1">4.1.1 是什么？</h3>
+
+Spring Cloud Ribbon是基于Netflix Ribbon实现的一套**客户端负载均衡的工具**。
+
+简单的说，Ribbon是Netflix发布的开源项目，主要功能是提供**客户端的软件负载均衡算法**，将Netflix的中间层服务连接在一起。Ribbon客户端组件提供一系列完善的配置项如连接超时，重试等。简单的说，就是在配置文件中列出Load Balancer（简称LB）后面所有的机器，Ribbon会自动的帮助你基于某种规则（如简单轮询，随机连接等）去连接这些机器。我们也很容易使用Ribbon实现自定义的负载均衡算法。
+
+官网资料：https://github.com/Netflix/ribbon/wiki/Getting-Started
+
+<h3 id="4.1.2">4.1.2 能干嘛？</h3>
+
+**LB**，即**负载均衡(Load Balance)**，在微服务或分布式集群中经常用的一种应用。
+* **集中式LB**
+即在服务的消费方和提供方之间使用独立的LB设施(可以是硬件，如F5, 也可以是软件，如nginx), 由该设施负责把访问请求通过某种策略转发至服务的提供方；
+* **进程内LB**
+将LB逻辑集成到消费方，消费方从服务注册中心获知有哪些地址可用，然后自己再从这些地址中选择出一个合适的服务器。
+Ribbon就属于进程内LB，它只是一个类库，集成于消费方进程，消费方通过它来获取到服务提供方的地址。
+
+负载均衡简单的说就是将用户的请求平摊的分配到多个服务上，从而达到系统的HA。
+
+常见的负载均衡有软件Nginx，LVS，硬件 F5等。
+
+相应的在中间件，例如：dubbo和SpringCloud中均给我们提供了负载均衡，**SpringCloud的负载均衡算法可以自定义**。
+
+
+<h2 id="4.2">4.2 Ribbon配置初步</h2>
+
+操作步骤：
+1. 修改消费者microservicecloud-consumer-dept-80工程
+2. 修改pom.xml文件，添加如下内容
+```
+        <!-- Ribbon相关 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-ribbon</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+```
+3. 修改消费者application.yml 添加Eureka的服务注册地址
+```
+eureka:
+  client:
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/  # Eureka的服务注册地址
+```
+4. 对ConfigBean进行新注解@LoadBalanced 获得Rest时加入Ribbon的配置
+```
+    @Bean
+    @LoadBalanced
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
+    }
+```
+5. 主启动类DeptConsumer80_App.java添加@**EnableEurekaClient**
+6. 修改客户端访问类ConsumerDeptController.java
+```
+@RestController
+public class ConsumerDeptController {
+    //    private static final String REST_URL_PREFIX = "http://localhost:8001";
+    // 通过微服务名字从Eureka上找到并访问
+    private static final String REST_URL_PREFIX = "http://MICROSERVICECLOUD-DEPT";
+    // ...
+}
+```
+7. 先启动3个eureka集群后，再启动服务提供者microservicecloud-provider-dept-8001并注册进eureka
+8. 启动消费者微服务microservicecloud-consumer-dept-80
+9. 测试
+```
+http://localhost/consumer/dept/get/1
+http://localhost/consumer/dept/list
+http://localhost/consumer/dept/add?dname=大数据部
+```
+10. 小总结
+Ribbon和Eureka整合后Consumer可以直接调用服务而不用再关心地址和端口号
+```
+     // 通过微服务名字从Eureka上找到并访问
+    private static final String REST_URL_PREFIX = "http://MICROSERVICECLOUD-DEPT";
+
+    private final RestTemplate restTemplate;
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
