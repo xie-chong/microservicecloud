@@ -385,5 +385,40 @@ Eureka界面出现红字提示："**EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMIN
 
 microservicecloud-provider-dept-8001微服务发布到上面3台eureka集群配置中
 
+#### 操作步骤
+
++ 1. 新建microservicecloud-eureka-7002/microservicecloud-eureka-7003   
++ 2. 按照7001为模板粘贴POM   
++ 3. 修改7002和7003的主启动类   
++ 4. 修改映射配置   
+找到C:\Windows\System32\drivers\etc路径下的hosts文件添加下面配置   
+```
+127.0.0.1 eureka7001.com
+127.0.0.1 eureka7002.com
+127.0.0.1 eureka7003.com
+```
++ .5 修改3台eureka服务器的yml配置(7001、7002、7003)   
+```
+server:
+  port: 7003
+
+eureka:
+  instance:
+    hostname: eureka7003.com #eureka服务端的实例名称
+  client:
+    register-with-eureka: false     #false表示不向注册中心注册自己。
+    fetch-registry: false     #false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务
+    service-url:
+      #单机 defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/       #设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址（单机）。
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
+```
++ 6. 修改服务提供者microservicecloud-provider-dept-8001的yml配置，将微服务发布到上面3台eureka集群中   
+```
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url:
+      # defaultZone: http://localhost:7001/eureka   # 单机修改为集群配置
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+```
 
 
