@@ -91,10 +91,11 @@ http://localhost/consumer/dept/add?dname=AI
 ---
 
 <h2 id="3.1">3.1 Eureka是什么？</h2>   
-Eureka是Netflix的一个子模块，也是核心模块之一。Eureka是一个基于REST的服务，用于定位服务，以实现云端中间层服务发现和故障转移。
+Eureka是Netflix的一个子模块，也是核心模块之一。Eureka是一个基于REST的服务，用于定位服务，以实现云端中间层服务发现和故障转移。   
 
 服务注册与发现对于微服务架构来说是非常重要的，有了服务发现与注册，**只需要使用服务的标识符，就可以访问到服务**，而不需要修改服务调用的配置文件了。**功能类似于dubbo的注册中心，比如Zookeeper**。
 
+Netflix再设计EUreka时遵守的是AP原则。
 
 <h2 id="3.2">3.2 Eureka原理讲解？</h2>   
 
