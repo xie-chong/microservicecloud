@@ -541,7 +541,7 @@ Ribbon和Eureka整合后Consumer可以直接调用服务而不用再关心地址
 
 <h2 id="4.3">4.3 Ribbon负载均衡</h2>
 
-#### 架构说明
+#### 4.3.1 架构说明
 
 Ribbon在工作时分成两步:   
 1. 先选择 EurekaServer ,它优先选择在同一个区域内负载较少的server。
@@ -549,13 +549,12 @@ Ribbon在工作时分成两步:
 
 其中Ribbon提供了多种策略：比如轮询、随机和根据响应时间加权。
 
-#### 多服务实例构建步骤
+#### 4.3.2 多服务实例构建步骤
 1. 参考服务提供者microservicecloud-provider-dept-8001，新建两份，分别命名为8002，8003
 2. 新建8002/8003服务对应的数据库（cloudDB02、cloudDB03），各自微服务分别连各自的数据库
 3. 修改8002/8003各自YML（端口、数据库连接、eureka.instance.instance-id）
-
+变化部分   
 ```
-# 变化部分
 server:
   port: 8001
 
@@ -565,9 +564,10 @@ server:
 eureka:
   instance:
     instance-id: microservicecloud-dept8002   #自定义服务名称信息
+```
 
-# 完整内容
-
+完整内容   
+```
 server:
   port: 8002
 
