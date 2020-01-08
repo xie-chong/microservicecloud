@@ -547,7 +547,7 @@ Ribbon和Eureka整合后Consumer可以直接调用服务而不用再关心地址
 
 ![](src/main/resources/img/Ribbon-architecture.jpg)   
 
-Ribbon在工作时分成两步:   
+**Ribbon在工作时分成两步**:   
 1. 先选择 EurekaServer ,它优先选择在同一个区域内负载较少的server。
 2. 再根据用户指定的策略，在从server取到的服务注册列表中选择一个地址。
 
