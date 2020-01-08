@@ -19,7 +19,7 @@
     - [3.3.4 eureka自我保护](#3.3.4)
     - [3.3.5 microservicecloud-provider-dept-8001服务发现Discovery](#3.3.5)
   - [3.4 集群配置](#3.4)
--[4. Ribbon负载均衡](#4)
+- [4. Ribbon负载均衡](#4)
 
 <!-- /MarkdownTOC -->
 
