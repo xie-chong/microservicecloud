@@ -714,7 +714,7 @@ http://localhost/consumer/dept/get/1
 
 2. 注解@ComponentScan就在@SpringBootApplication中，所以需要创建一个类不在当前工程注解@ComponentScan的同包或者子包中。
 
-3. 当自定义了IRule,若ConfigBean配置类中存在相关的IRule，则已经不能获取该配置（需要删除）,因为系统使用的是在主启动类里配置的规则（@**RibbonClient**）。
+3. 当自定义了IRule,若ConfigBean配置类中存在相关的IRule，则已经不能获取该配置（需要删除）,因为系统使用的是在主启动类里@**RibbonClient**对应的规则。
 
 
 <h3 id="4.5.3">4.5.3 自定义规则深度解析</h3>
