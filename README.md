@@ -851,13 +851,13 @@ Feign旨在使编写Java Http客户端变得更容易。
 修改主启动类名字 DeptConsumer80_Feign_App   
 3. 修改microservicecloud-consumer-dept-feign工程的pom.xml，添加对feign的支持
 4. 修改microservicecloud-api工程
-pom.xml
+* pom.xml
 ```
 
 ```
-新建DeptClientService接口,并新增注解@**FeignClient**   
-mvn clean   
-mvn install
+* 新建DeptClientService接口,并新增注解@**FeignClient**   
+* mvn clean   
+* mvn install
 5. 修改microservicecloud-consumer-dept-feign工程的Controller，使用上一步新建的DeptClientService.java接口
 6. microservicecloud-consumer-dept-feign工程主启动类添加注解@**EnableFeignClients**
 7. 测试，启动(7001/7002/7003->8001/8002/8003->Feign消费者)
