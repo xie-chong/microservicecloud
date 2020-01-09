@@ -878,6 +878,16 @@ public interface DeptClientService {
 * mvn install
 5. 修改microservicecloud-consumer-dept-feign工程的Controller，使用上一步新建的DeptClientService.java接口
 6. microservicecloud-consumer-dept-feign工程主启动类添加注解@**EnableFeignClients**
+```
+@SpringBootApplication
+@EnableEurekaClient
+@EnableFeignClients
+public class DeptConsumer80_Feign_App {
+    public static void main(String[] args) {
+        SpringApplication.run(DeptConsumer80_Feign_App.class, args);
+    }
+}
+```
 7. 测试，启动(7001/7002/7003->8001/8002/8003->Feign消费者)
 ```
 http://localhost/consumer/dept/list
