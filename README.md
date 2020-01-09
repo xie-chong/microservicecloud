@@ -719,7 +719,7 @@ http://localhost/consumer/dept/get/1
 
 <h3 id="4.5.3">4.5.3 自定义规则深度解析</h3>
 
-1. **需求**:依旧使用默认的轮询策略，但是加上新的需求,每个服务器要求被调用5次.即之前一台机器执行一次，现在是每台机器执行4次
+1. **需求**:依旧使用默认的轮询策略，但是加上新的需求,每个服务器要求被调用5次。即之前一台机器执行一次，现在是每台机器执行5次
 2. **解析源码**   
 ```
 https://github.com/Netflix/ribbon/blob/master/ribbon-loadbalancer/src/main/java/com/netflix/loadbalancer/RandomRule.java
@@ -793,7 +793,7 @@ public class InvokingFiveTimesRule extends AbstractLoadBalancerRule {
     }
 }
 ```
-4. 把MySelfRule.java类的返回值修改成当前自定义规则类   
+4. 把MySelfRule.java类的返回值修改成当前自定义规则类
 ```
 @Configuration
 public class MySelfRule {
