@@ -640,7 +640,7 @@ spring:
 
 <h2 id="4.4">4.4 Ribbon核心组件IRule</h2>
 
-#### IRule根据特定算法，从服务列表中选取一个要访问的服务    
+#### IRule根据特定算法，从服务列表中选取一个要访问的服务（Ribbon默认的自带有七种算法）    
 1. **RoundRobinRule**    
 轮询，依次执行每个执行一次(默认)   
 2. **RandomRule**   
