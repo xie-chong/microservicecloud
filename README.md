@@ -678,7 +678,7 @@ spring:
 ```
 @RibbonClient(name="对外曝光微服务的名称",configuration=自定义的Rlue配置类.class)
 ```
-3. 新建package com.gtguigu.ribbonrule，创建MySelfRule.java类，首先简单配置为随机规则   
+3. 新建package com.gtguigu.ribbonrule，创建自定义规则类MySelfRule.java，首先简单配置为随机规则   
 ```
 @Configuration
 public class MySelfRule {
