@@ -719,7 +719,95 @@ http://localhost/consumer/dept/get/1
 
 <h3 id="4.5.3">4.5.3 自定义规则深度解析</h3>
 
+1. **需求**:依旧使用默认的轮询策略，但是加上新的需求,每个服务器要求被调用5次.即之前一台机器执行一次，现在是每台机器执行4次
+2. **解析源码**   
+```
+https://github.com/Netflix/ribbon/blob/master/ribbon-loadbalancer/src/main/java/com/netflix/loadbalancer/RandomRule.java
+```
+3. 参考源码RandomRule.java，在自定义MySelfRule.java类同包中创建一个算法类(InvokingFiveTimesRule.java)   
+```
+public class InvokingFiveTimesRule extends AbstractLoadBalancerRule {
+    //    Random rand = new Random();
+    private int total = 0;            // 总共被调用的次数，目前要求每台被调用5次
+    private int currentIndex = 0;    // 当前提供服务的机器号
 
+    public InvokingFiveTimesRule() {
+    }
+
+    @SuppressWarnings({"RCN_REDUNDANT_NULLCHECK_OF_NULL_VALUE"})
+    public Server choose(ILoadBalancer lb, Object key) {
+        if (lb == null) {
+            return null;
+        } else {
+            Server server = null;
+
+            while (server == null) {
+                if (Thread.interrupted()) {
+                    return null;
+                }
+
+                List<Server> upList = lb.getReachableServers();
+                List<Server> allList = lb.getAllServers();
+                int serverCount = allList.size();
+                if (serverCount == 0) {
+                    return null;
+                }
+
+//                int index = this.rand.nextInt(serverCount);
+//                server = (Server)upList.get(index);
+
+                // 自定义算法 begin
+                if (total < 5) {
+                    server = upList.get(currentIndex);
+                    total++;
+                } else {
+                    total = 0;
+                    currentIndex++;
+                    if (currentIndex >= upList.size()) {
+                        currentIndex = 0;
+                    }
+                }
+                // 自定义算法 end
+
+                if (server == null) {
+                    Thread.yield();
+                } else {
+                    if (server.isAlive()) {
+                        return server;
+                    }
+
+                    server = null;
+                    Thread.yield();
+                }
+            }
+
+            return server;
+        }
+    }
+
+    public Server choose(Object key) {
+        return this.choose(this.getLoadBalancer(), key);
+    }
+
+    public void initWithNiwsConfig(IClientConfig clientConfig) {
+    }
+}
+```
+4. 把MySelfRule.java类的返回值修改成当前自定义规则类   
+```
+@Configuration
+public class MySelfRule {
+    @Bean
+    public IRule myRule() {
+//        return new RandomRule();// 用随机算法替换默认的轮询算法
+        return new InvokingFiveTimesRule();
+    }
+}
+```
+5. 测试自定义规则是否成功，启动(7001/7002/7003->8001/8002/8003->80)看看是否是执行的5次
+```
+http://localhost/consumer/dept/get/1
+```
 
 
 
