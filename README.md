@@ -28,6 +28,9 @@
   - [4.3 Ribbon负载均衡](#4.3)
   - [4.4 Ribbon核心组件IRule](#4.4)
   - [4.5 Ribbon自定义](#4.5)
+    - [4.5.1 操作步骤](#4.5.1)
+    - [4.5.2 注意配置细节](#4.5.2)
+    - [4.5.3 自定义规则深度解析](#4.5.3)
   
   
   
@@ -671,7 +674,7 @@ spring:
 
 源码地址：https://github.com/Netflix/ribbon
 
-#### 操作步骤
+<h3 id="4.5.1">4.5.1 操作步骤</h3>
 
 1. 修改消费者工程microservicecloud-consumer-dept-80   
 2. 主启动类DeptConsumer80_App.java添加注解@**RibbonClient**  
@@ -705,13 +708,16 @@ public class DeptConsumer80_App {
 http://localhost/consumer/dept/get/1
 ```
 
-#### 注意配置细节
+<h3 id="4.5.2">4.5.2 注意配置细节</h3>
 
 1. 官方文档明确给出了**警告**：自定义的Rlue配置类不放在@ComponentScan注解所扫描的当前包下以及该子包下，否则自定义的配置类就会被所有的Ribbon客户端共享，也就达不到特殊制定的目的。
 
 2. 注解@ComponentScan就在@SpringBootApplication中，所以需要创建一个类不在当前工程注解@ComponentScan的同包或者子包中。
 
 3. 当自定义了IRule,若ConfigBean配置类中存在相关的IRule，则已经不能获取该配置（需要删除）,因为系统使用的是在主启动类里配置的规则（@**RibbonClient**）。
+
+
+<h3 id="4.5.3">4.5.3 自定义规则深度解析</h3>
 
 
 
