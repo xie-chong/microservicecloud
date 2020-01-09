@@ -669,6 +669,11 @@ spring:
     }
 ```
 
+<p align="center">Ribbion的负载均衡算法继承关系图</p>   
+
+![](src/main/resources/img/AbstractLoadBalancerRule-Diagrams.PNG) 
+
+
 
 <h2 id="4.5">4.5 Ribbon自定义</h2>
 
