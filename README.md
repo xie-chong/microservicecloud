@@ -848,7 +848,7 @@ Feign旨在使编写Java Http客户端变得更容易。
 
 1. 参考消费者microservicecloud-consumer-dept-80
 2. 新建消费者microservicecloud-consumer-dept-feign   
-修改主启动类名字 DeptConsumer80_Feign_App   
+* 修改主启动类名字 DeptConsumer80_Feign_App   
 3. 修改microservicecloud-consumer-dept-feign工程的pom.xml，添加对feign的支持
 4. 修改microservicecloud-api工程
 * pom.xml
@@ -864,9 +864,8 @@ Feign旨在使编写Java Http客户端变得更容易。
 ```
 http://localhost/consumer/dept/list
 ```
-8. 小结
-Feign通过接口的方法调用Rest服务（之前是Ribbon+RestTemplate），该请求发送给Eureka服务器（http://MICROSERVICECLOUD-DEPT/dept/list）,
-通过Feign直接找到服务接口，由于在进行服务调用的时候融合了Ribbon技术，所以也支持负载均衡作用。
+8. 小结   
+Feign通过接口的方法调用Rest服务（之前是Ribbon+RestTemplate），该请求发送给Eureka服务器（http://MICROSERVICECLOUD-DEPT/dept/list）,通过Feign直接找到服务接口，由于在进行服务调用的时候融合了Ribbon技术，所以也支持负载均衡作用。
 
 
 
