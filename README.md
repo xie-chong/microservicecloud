@@ -667,7 +667,50 @@ spring:
 ```
 
 
+<h2 id="4.5">4.5 Ribbon自定义</h2>
 
+源码地址：https://github.com/Netflix/ribbon
+
+#### 操作步骤
+
+1. 修改消费者工程microservicecloud-consumer-dept-80   
+2. 主启动类DeptConsumer80_App.java添加注解@**RibbonClient**  
+```
+@RibbonClient(name="对外曝光微服务的名称",configuration=自定义的Rlue配置类.class)
+```
+3. 新建package com.gtguigu.ribbonrule，创建MySelfRule.java类，首先简单配置为随机规则   
+```
+@Configuration
+public class MySelfRule {
+    @Bean
+    public IRule myRule() {
+        return new RandomRule();// 用随机算法替换默认的轮询算法
+    }
+}
+```
+4. 修改主启动类   
+```
+@SpringBootApplication
+@EnableEurekaClient
+@RibbonClient(name = "MICROSERVICECLOUD-DEPT", configuration = MySelfRule.class)
+public class DeptConsumer80_App {
+    public static void main(String[] args) {
+        SpringApplication.run(DeptConsumer80_App.class, args);
+    }
+}
+
+```
+5. 测试自定义的规则（先简单配置为随机规则）是否成功启动(7001/7002/7003->8001/8002/8003->80)
+```
+http://localhost/consumer/dept/get/1
+```
+
+#### 注意配置细节
+
+1. 官方文档明确给出了警告：自定义的Rlue配置类不放在@ComponentScan注解所扫描的当前包下以及该子包下，否则自定义的配置类就会被所有的Ribbon客户端共享，也就达不到特殊制定的目的。   
+注解@ComponentScan就在@SpringBootApplication中，所以需要创建一个类不在当前工程注解@ComponentScan的同包或者子包中。
+
+2. 当自定义了IRule,若ConfigBean配置类中存在相关的IRule，则已经不能存在（需要删除）,不然系统无法抓取
 
 
 
