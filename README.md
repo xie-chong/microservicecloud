@@ -853,9 +853,27 @@ Feign旨在使编写Java Http客户端变得更容易。
 4. 修改microservicecloud-api工程
 * pom.xml
 ```
-
+       <!--添加feign客户端支持-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-feign</artifactId>
+        </dependency>
 ```
-* 新建DeptClientService接口,并新增注解@**FeignClient**   
+* 新建DeptClientService.java接口(方法名与调用服务端接口DeptService.java里方法名一致),并新增注解@**FeignClient**  
+```
+@FeignClient(value = "MICROSERVICECLOUD-DEPT")
+public interface DeptClientService {
+
+    @RequestMapping(value = "/dept/add", method = RequestMethod.POST)
+    boolean add(Dept dept);
+
+    @RequestMapping(value = "/dept/get/{id}", method = RequestMethod.GET)
+    Dept get(Long id);
+
+    @RequestMapping(value = "/dept/list", method = RequestMethod.GET)
+    List<Dept> list();
+}
+```
 * mvn clean   
 * mvn install
 5. 修改microservicecloud-consumer-dept-feign工程的Controller，使用上一步新建的DeptClientService.java接口
@@ -865,7 +883,8 @@ Feign旨在使编写Java Http客户端变得更容易。
 http://localhost/consumer/dept/list
 ```
 8. 小结   
-Feign通过接口的方法调用Rest服务（之前是Ribbon+RestTemplate），该请求发送给Eureka服务器（http://MICROSERVICECLOUD-DEPT/dept/list）,通过Feign直接找到服务接口，由于在进行服务调用的时候融合了Ribbon技术，所以也支持负载均衡作用。
+Feign通过接口的方法调用Rest服务（之前是Ribbon+RestTemplate），该请求发送给Eureka服务器（http://MICROSERVICECLOUD-DEPT/dept/list）,
+通过Feign直接找到服务接口，由于在进行服务调用的时候融合了Ribbon技术，所以也支持负载均衡作用。
 
 
 
