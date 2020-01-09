@@ -707,10 +707,11 @@ http://localhost/consumer/dept/get/1
 
 #### 注意配置细节
 
-1. 官方文档明确给出了警告：自定义的Rlue配置类不放在@ComponentScan注解所扫描的当前包下以及该子包下，否则自定义的配置类就会被所有的Ribbon客户端共享，也就达不到特殊制定的目的。   
-注解@ComponentScan就在@SpringBootApplication中，所以需要创建一个类不在当前工程注解@ComponentScan的同包或者子包中。
+1. 官方文档明确给出了**警告**：自定义的Rlue配置类不放在@ComponentScan注解所扫描的当前包下以及该子包下，否则自定义的配置类就会被所有的Ribbon客户端共享，也就达不到特殊制定的目的。
 
-2. 当自定义了IRule,若ConfigBean配置类中存在相关的IRule，则已经不能存在（需要删除）,不然系统无法抓取
+2. 注解@ComponentScan就在@SpringBootApplication中，所以需要创建一个类不在当前工程注解@ComponentScan的同包或者子包中。
+
+3. 当自定义了IRule,若ConfigBean配置类中存在相关的IRule，则已经不能获取该配置（需要删除）,因为系统使用的是在主启动类里配置的规则（@**RibbonClient**）。
 
 
 
