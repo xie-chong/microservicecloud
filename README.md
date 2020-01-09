@@ -658,7 +658,13 @@ spring:
 7. **ZoneAvoidanceRule**   
 默认规则，复合判断Server所在区域的性能和Server的可用性选择服务器
 
-
+#### 选择需要的算法，只需在配置类中改变配置即可   
+```
+    @Bean
+    public IRule myRule() {
+        return new RandomRule();// 用随机算法替换默认的轮询算法
+    }
+```
 
 
 
