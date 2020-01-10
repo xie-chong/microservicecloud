@@ -877,7 +877,7 @@ public interface DeptClientService {
     boolean add(Dept dept);
 
     @RequestMapping(value = "/dept/get/{id}", method = RequestMethod.GET)
-    Dept get(Long id);
+    Dept get(@PathVariable("id") Long id);
 
     @RequestMapping(value = "/dept/list", method = RequestMethod.GET)
     List<Dept> list();
@@ -1050,7 +1050,7 @@ public class DeptClientServiceFallbackFactory implements FallbackFactory<DeptCli
 2. 在接口DeptClientService.java的注解@FeignClient中添加fallbackFactory属性值（microservicecloud-api工程）
 ```
 //@FeignClient(value = "MICROSERVICECLOUD-DEPT")
-@FeignClient(value = "MICROSERVICECLOUD-DEPT", fallbackFactory = DeptClientServiceFallbackFactory.class)
+@FeignClient(value = "microservicecloud-dept", fallbackFactory = DeptClientServiceFallbackFactory.class)
 ```
 3. microservicecloud-api工程 mvn clean install
 4. 修改服务消费者microservicecloud-consumer-dept-feign工程的application.yml
@@ -1058,7 +1058,7 @@ public class DeptClientServiceFallbackFactory implements FallbackFactory<DeptCli
 # 添加对hystrix的支持
 feign:
   hystrix:
-    enabled: true
+    enabled: ture
 ```
 5. 测试，启动(7001/7002/7003->8001->Feign消费者)   
 * 正常访问测试```http://localhost/consumer/dept/get/1```
@@ -1071,7 +1071,7 @@ feign:
     "db_source": "no this database in MySQL"
 }
 ```
-此时服务端provider已经down了，但是我们做了服务降级处理，让客户端在服务端不可用时也会获得提示信息而不会挂起耗死服务器。
+此时服务端provider已经down了，但是我们做了服务降级处理，让客户端在服务端不可用时也会获得提示信息而不会挂起耗死服务器。不使用hystrix则提示“connect timed out executing GET http://MICROSERVICECLOUD-DEPT/dept/get/1”
 
 
 
