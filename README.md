@@ -1071,7 +1071,7 @@ feign:
     "db_source": "no this database in MySQL"
 }
 ```
-此时服务端provider已经down了，但是我们做了服务降级处理，让客户端在服务端不可用时也会获得提示信息而不会挂起耗死服务器。不使用hystrix则提示“connect timed out executing GET http://MICROSERVICECLOUD-DEPT/dept/get/1”
+此时服务端provider已经down了，但是我们做了服务降级处理，让客户端在服务端不可用时也会获得提示信息而不会挂起耗死服务器。不使用hystrix则提示```connect timed out executing GET http://MICROSERVICECLOUD-DEPT/dept/get/1```
 
 
 
