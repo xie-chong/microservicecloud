@@ -43,8 +43,11 @@
     - [6.2.1 服务熔断是什么？](#6.2.1)
     - [6.2.2 构建步骤](#6.2.2)
   - [6.3 服务降级](#6.3)
+    - [6.3.1 服务降级是什么？](#6.3.1)
+    - [6.3.2 构建步骤](#6.3.2)
   - [6.4 服务监控hystrixDashboard](#6.4)
-  
+    - [6.4.1 概述](#6.4.1)
+    - [6.4.2 构建步骤](#6.4.2)
   
 <!-- /MarkdownTOC -->
 
@@ -1015,13 +1018,13 @@ public class DeptProvider8001_App {
 
 <h2 id="6.3">6.3 服务降级</h2>
 
-<h3 id="6.2.1">6.2.1 服务降级是什么？</h3>
+<h3 id="6.3.1">6.3.1 服务降级是什么？</h3>
 
 整体资源快不够了，忍痛将某些服务先关掉，待渡过难关，再开启回来。
 
 服务降级处理是在**客户端实现完成的，与服务端没有关系**。
 
-<h3 id="6.2.2">6.2.2 构建步骤</h3>
+<h3 id="6.3.2">6.3.2 构建步骤</h3>
 
 1. 修改microservicecloud-api工程,根据已经有的DeptClientService接口，新建一个实现了FallbackFactory接口的类DeptClientServiceFallbackFactory.java。  **注意**：千万不要忘记在类上面新增@Component注解，大坑！！！
 ```
@@ -1081,7 +1084,11 @@ feign:
 
 <h2 id="6.4">6.4 服务监控hystrixDashboard</h2>
 
+<h3 id="6.4.1">6.4.1 概述</h3>
 
+除了隔离依赖服务的调用以外，Hystrix还提供了**准实时的调用监控（Hystrix Dashboard）**，Hystrix会持续地记录所有通过Hystrix发起的请求的执行信息，**并以统计报表和图形的形式展示给用户**，包括每秒执行多少请求多少成功，多少失败等。Netflix通过hystrix-metrics-event-stream项目实现了对以上指标的监控。Spring Cloud也提供了Hystrix Dashboard的整合，对监控内容转化成可视化界面。
+
+<h3 id="6.4.2">6.4.2 构建步骤</h3>
 
 
 
