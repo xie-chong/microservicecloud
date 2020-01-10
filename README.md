@@ -959,13 +959,13 @@ Hystrix是一个用于处理分布式系统的**延迟**和**容错**的开源�
             <artifactId>spring-cloud-starter-hystrix</artifactId>
         </dependency>
 ```
-4. 修改application.yml(实例id)
+4. 修改application.yml
 ```
 eureka:
   instance:
     instance-id: microservicecloud-dept8001-hystrix   #自定义服务名称信息
 ```
-5. 修改DeptController.java
+5. 修改DeptController.java添加新注解@**HystrixCommand**
 ```
 @RestController
 public class DeptController {
@@ -994,7 +994,7 @@ public class DeptController {
     }
 }
 ```
-一旦调用服务方法失败并抛出了错误信息后，会自动调用@HystrixCommand标注好的fallbackMethod指定的方法
+一旦调用服务方法失败并抛出了错误信息后，会自动调用@HystrixCommand标注好的fallbackMethod指定的方法   
 6. 修改服务提供者主启动类DeptProvider8001_Hystrix_App.java,添加新注解@**EnableCircuitBreaker**
 ```
 @SpringBootApplication
