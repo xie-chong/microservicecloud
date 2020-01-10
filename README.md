@@ -1012,6 +1012,69 @@ public class DeptProvider8001_App {
 
 <h2 id="6.3">6.3 服务降级</h2>
 
+<h3 id="6.2.1">6.2.1 服务降级是什么？</h3>
+
+整体资源快不够了，忍痛将某些服务先关掉，待渡过难关，再开启回来。
+
+服务降级处理是在**客户端实现完成的，与服务端没有关系**。
+
+<h3 id="6.2.2">6.2.2 构建步骤</h3>
+
+1. 修改microservicecloud-api工程,根据已经有的DeptClientService接口，新建一个实现了FallbackFactory接口的类DeptClientServiceFallbackFactory.java。  **注意**：千万不要忘记在类上面新增@Component注解，大坑！！！
+```
+@Component
+public class DeptClientServiceFallbackFactory implements FallbackFactory<DeptClientService> {
+    @Override
+    public DeptClientService create(Throwable throwable) {
+        return new DeptClientService() {
+            @Override
+            public Dept get(Long id) {
+                return new Dept().setDeptno(id)
+                        .setDname("该ID：" + id + "没有没有对应的信息,Consumer客户端提供的降级信息,此刻服务Provider已经关闭")
+                        .setDb_source("no this database in MySQL");
+            }
+
+            @Override
+            public List<Dept> list() {
+                return null;
+            }
+
+            @Override
+            public boolean add(Dept dept) {
+                return false;
+            }
+        };
+    }
+}
+```
+2. 在接口DeptClientService.java的注解@FeignClient中添加fallbackFactory属性值（microservicecloud-api工程）
+```
+//@FeignClient(value = "MICROSERVICECLOUD-DEPT")
+@FeignClient(value = "MICROSERVICECLOUD-DEPT", fallbackFactory = DeptClientServiceFallbackFactory.class)
+```
+3. microservicecloud-api工程 mvn clean install
+4. 修改服务消费者microservicecloud-consumer-dept-feign工程的application.yml
+```
+# 添加对hystrix的支持
+feign:
+  hystrix:
+    enabled: true
+```
+5. 测试，启动(7001/7002/7003->8001->Feign消费者)   
+* 正常访问测试```http://localhost/consumer/dept/get/1```
+* 故意关闭微服务microservicecloud-provider-dept-8001
+客户端自己调用提示
+```
+{
+    "deptno": 1,
+    "dname": "该ID：1没有没有对应的信息,Consumer客户端提供的降级信息,此刻服务Provider已经关闭",
+    "db_source": "no this database in MySQL"
+}
+```
+此时服务端provider已经down了，但是我们做了服务降级处理，让客户端在服务端不可用时也会获得提示信息而不会挂起耗死服务器。
+
+
+
 
 <h2 id="6.4">6.4 服务监控hystrixDashboard</h2>
 
