@@ -34,7 +34,16 @@
 - [5. Feign负载均衡](#5)
   - [5.1 概述](#5.1)
   - [5.2 Feign使用步骤](#5.2)
-  
+- [6. Hystrix断路器](#5)
+  - [6.1 概述](#6.1)
+    - [6.1.1 分布式系统面临的问题](#6.1.1)
+    - [6.1.2 Hystrix是什么？](#6.1.2)
+    - [6.1.3 能干嘛？](#6.1.3)
+  - [6.2 服务熔断](#6.2)
+    - [6.2.1 服务熔断是什么？](#6.2.1)
+    - [6.2.2 构建步骤](#6.2.2)
+  - [6.3 服务降级](#6.3)
+  - [6.4 服务监控hystrixDashboard](#6.4)
   
   
 <!-- /MarkdownTOC -->
@@ -899,7 +908,112 @@ Feign通过接口的方法调用Rest服务（之前是Ribbon+RestTemplate），�
 
 
 
+<h1 id="6">6. Hystrix断路器</h1>
 
+<h2 id="6.1">6.1 概述</h2>
+
+<h3 id="6.1.1">6.1.1 分布式系统面临的问题</h3>
+
+**分布式系统面临的问题**   
+复杂分布式体系结构中的应用程序有数十个依赖关系，每个依赖关系在某些时候将不可避免地失败。
+
+**服务雪崩**   
+多个微服务之间调用的时候，假设微服务A调用微服务B和微服务C，微服务B和微服务C又调用其它的微服务，这就是所谓的“**扇出**”。如果扇出的链路上某个微服务的调用响应时间过长或者不可用，对微服务A的调用就会占用越来越多的系统资源，进而引起系统崩溃，所谓的“雪崩效应”.
+
+对于高流量的应用来说，单一的后端依赖可能会导致所有服务器上的所有资源都在几秒钟内饱和。比失败更糟糕的是，这些应用程序还可能导致服务之间的延迟增加，备份队列，线程和其他系统资源紧张，导致整个系统发生更多的级联故障。这些都表示需要对故障和延迟进行隔离和管理，以便单个依赖关系的失败，不能取消整个应用程序或系统。
+
+<h3 id="6.1.2">6.1.2 Hystrix是什么？</h3>
+
+Hystrix是一个用于处理分布式系统的**延迟**和**容错**的开源库，在分布式系统里，许多依赖不可避免的会调用失败，比如超时、异常等，Hystrix能够保证在一个依赖出问题的情况下，**不会导致整体服务失败，避免级联故障，以提高分布式系统的弹性**。
+
+“断路器”本身是一种开关装置，当某个服务单元发生故障之后，通过断路器的故障监控（类似熔断保险丝），**向调用方返回一个符合预期的、可处理的备选响应（FallBack），而不是长时间的等待或者抛出调用方无法处理的异常**，这样就保证了服务调用方的线程不会被长时间、不必要地占用，从而避免了故障在分布式系统中的蔓延，乃至雪崩。
+
+官网资料： https://github.com/Netflix/Hystrix/wiki/How-To-Use
+
+<h3 id="6.1.3">6.1.3 能干嘛？</h3>
+
+* 服务熔断
+* 服务降级
+* 服务限流
+* 接近实时的监控
+* ......
+
+
+<h2 id="6.2">6.2 服务熔断</h2>
+
+<h3 id="6.2.1">6.2.1 服务熔断是什么？</h3>
+
+熔断机制是应对雪崩效应的一种微服务链路保护机制。
+
+当扇出链路的某个微服务不可用或者响应时间太长时，会进行服务的降级，进而熔断该节点微服务的调用，快速返回"错误"的响应信息。当检测到该节点微服务调用响应正常后恢复调用链路。在SpringCloud框架里熔断机制通过Hystrix实现。Hystrix会监控微服务间调用的状况，当失败的调用到一定阈值，缺省是5秒内20次调用失败就会启动熔断机制。熔断机制的注解是@**HystrixCommand**。
+
+<h3 id="6.2.2">6.2.2 构建步骤</h3>
+
+1. 参考服务提供者microservicecloud-provider-dept-8001
+2. 新建服务提供者microservicecloud-provider-dept-hystrix-8001
+3. 修改pom.xml
+```
+        <!--  添加hystrix支持 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix</artifactId>
+        </dependency>
+```
+4. 修改application.yml(实例id)
+```
+eureka:
+  instance:
+    instance-id: microservicecloud-dept8001-hystrix   #自定义服务名称信息
+```
+5. 修改DeptController.java
+```
+@RestController
+public class DeptController {
+    private final DeptService service;
+    private final DiscoveryClient client;
+
+    public DeptController(DeptService service, @Qualifier("discoveryClient") DiscoveryClient client) {
+        this.service = service;
+        this.client = client;
+    }
+
+    @RequestMapping(value = "/dept/get/{id}", method = RequestMethod.GET)
+    @HystrixCommand(fallbackMethod = "processHystrix_Get")
+    public Dept get(@PathVariable("id") Long id) {
+        Dept dept = this.service.get(id);
+        if (null == dept) {
+            throw new RuntimeException("该ID：" + id + "没有没有对应的信息");
+        }
+        return dept;
+    }
+
+    public Dept processHystrix_Get(@PathVariable("id") Long id) {
+        return new Dept().setDeptno(id)
+                .setDname("该ID：" + id + "没有没有对应的信息,null--@HystrixCommand")
+                .setDb_source("no this database in MySQL");
+    }
+}
+```
+一旦调用服务方法失败并抛出了错误信息后，会自动调用@HystrixCommand标注好的fallbackMethod指定的方法
+6. 修改服务提供者主启动类DeptProvider8001_Hystrix_App.java,添加新注解@**EnableCircuitBreaker**
+```
+@SpringBootApplication
+@MapperScan("com.atguigu.springcloud.dao")
+@EnableEurekaClient
+@EnableDiscoveryClient
+public class DeptProvider8001_App {
+    public static void main(String[] args) {
+        SpringApplication.run(DeptProvider8001_App.class, args);
+    }
+}
+```
+7. 测试，启动(7001/7002/7003->8001_Hystrix->80消费者)
+
+
+<h2 id="6.3">6.3 服务降级</h2>
+
+
+<h2 id="6.4">6.4 服务监控hystrixDashboard</h2>
 
 
 
