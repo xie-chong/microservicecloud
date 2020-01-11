@@ -1153,18 +1153,18 @@ http://localhost:8001/hystrix.stream
 单体应用的监控：http://hystrix-app:port/hystrix.stream
 ```
 
-![]()   
+![](src/main/resources/img/AbstractLoadBalancerRule-Diagrams.PNG)   
 * Delay：该参数用来控制服务器上轮询监控信息的延迟时间，默认为2000毫秒，可以通过配置该属性来降低客户端的网络和CPU消耗。   
 * Title：该参数对应了头部标题Hystrix Stream之后的内容，默认会使用具体监控实例的URL，可以通过配置该信息来展示更合适的标题。
 
 
 **如何看监控结果**   
-* **7色**   
+* **7 色**   
 Success | Short-Circuited | Bad Request | Timeout | Rejected | Failure | Error %
-* **1圈**   
+* **1 圈**   
 实心圆：共有两种含义。它通过颜色的变化代表了实例的健康程度，它的健康度从绿色<黄色<橙色<红色递减。
 该实心圆除了**颜色的变化**之外，它的**大小**也会根据实例的请求**流量**发生变化，**流量越大该实心圆就越大**。所以通过该实心圆的展示，就可以在大量的实例中快速的发现故障实例和高压力实例。
-* **1线**   
+* **1 线**   
 曲线：用来记录2分钟内流量的相对变化，可以通过它来观察到流量的上升和下降趋势。
 
 
