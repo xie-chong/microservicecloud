@@ -1201,6 +1201,7 @@ Zuul和Eureka进行整合，将Zuul自身注册为Eureka服务治理下的应用
 
 
 <h2 id="7.2">7.2 路由基本配置</h2>
+
 **构建步骤**   
 1. 新建Module,microservicecloud-zuul-gateway-9527
 2. pom.xml
