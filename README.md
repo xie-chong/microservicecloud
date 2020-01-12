@@ -1383,6 +1383,73 @@ SpringCloud Config分为**服务端**和**客户端**两部分。
 由于SpringCloud Config 默认使用Git来存储配置文件（也有其他方式，比如支持SVN和本地文件），但最推荐的还是Git，而且使用的是http/https访问的形式。
 
 
+<h2 id="8.2">8.2 SpringCloud Config服务端配置</h2>
+
+**构建步骤**
+1. 在GitHub上建立仓库microservicecloud-config
+2. 由上一步获得SSH协议的git地址```git@github.com:xie-chong/microservicecloud-config.git```
+3. 本地硬盘目录上新建git仓库并clone
+4. 在本地库中建立application.yml，必须保存为**UTF-8格式**
+5. 将上一步的YML文件推送到github上
+```
+git status
+git add
+git commit -m "init yml
+git push origin master
+```
+6. 新建Module,microservicecloud-config-3344(Cloud的配置中心模块)
+7. 修改pom.xml
+```
+    <dependencies>
+        <!-- springCloud Config -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-server</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+    </dependencies>
+```
+8. 修改application.xml
+```
+server:
+  port: 3344
+
+spring:
+  application:
+    name:  microservicecloud-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/xie-chong/microservicecloud-config.git #GitHub上面的git仓库名字(也可以使用SSH)
+```
+9. 新建主启动类，添加注解@**EnableConfigServer**
+10. 修改hosts文件，添加映射```  ```
+11. 启动项目config-3344
+12. 测试，通过config微服务是否可以从Github上获取配置内容，访问地址
+```
+http://config-3344:3344/application-dev.yml
+http://config-3344:3344/application-test.yml
+http://config-3344:3344/application-xxx.yml(不存在的配置)
+```
+13. 配置文件读取规则
+```
+HTTP服务具有以下格式的资源：
+/{application}/{profile}[/{label}]
+/{application}-{profile}.yml
+/{label}/{application}-{profile}.yml
+/{application}-{profile}.properties
+/{label}/{application}-{profile}.properties
+```
 
 
 
