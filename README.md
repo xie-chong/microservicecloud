@@ -48,6 +48,10 @@
   - [6.4 服务监控hystrixDashboard](#6.4)
     - [6.4.1 概述](#6.4.1)
     - [6.4.2 构建步骤](#6.4.2)
+- [7. zuul路由网关](#7)
+  - [7.1 概述](#7.1)
+  - [7.2 路由基本配置](#7.2)
+  - [7.3 路由访问映射规则](#7.3)
   
 <!-- /MarkdownTOC -->
 
@@ -1175,6 +1179,101 @@ Trubine聚合服务构建参考连接```https://blog.csdn.net/hzygcs/article/det
 
 
 
+<h1 id="7">7 zuul路由网关</h1>
+
+<h2 id="7.1">7.1 概述</h2>
+
+### 是什么？
+Zuul包含了对请求的**路由**和**过滤**两个最主要的功能：
+* **路由功能**负责将外部请求转发到具体的微服务实例上，是实现外部访问统一入口的基础。
+* **过滤器功能**则负责对请求的处理过程进行干预，是实现请求校验、服务聚合等功能的基础。
+
+Zuul和Eureka进行整合，将Zuul自身注册为Eureka服务治理下的应用，同时从Eureka中获得其他微服务的消息，也即以后的访问微服务都是通过Zuul跳转后获得。
+
+**注意**：Zuul服务最终还是会注册进Eureka
+
+提供=代理+路由+过滤三大功能
+
+### 能干嘛？
+路由和过滤
+
+官网资料：https://github.com/Netflix/zuul/wiki/Getting-Started
+
+
+<h2 id="7.2">7.2 路由基本配置</h2>
+**构建步骤**   
+1. 新建Module,microservicecloud-zuul-gateway-9527
+2. pom.xml
+```
+    <artifactId>microservicecloud-zuul-gateway-9527</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+        <!-- zuul路由网关 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zuul</artifactId>
+        </dependency>
+
+        <!-- actuator监控 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+```
+3. application.yml
+```
+server:
+  port: 9527
+
+spring:
+  application:
+    name: microservicecloud-zuul-gateway
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka
+  instance:
+    instance-id: gateway-9527.com
+    prefer-ip-address: true
+
+
+info:
+  app.name: atguigu-microcloud
+  company.name: www.atguigu.com
+  build.artifactId: @project.artifactId@
+  build.version: @project.version@
+```
+4. 修改hosts```127.0.0.1 myzuul.com```
+5. 新建主启动类，添加@**EnableZuulProxy**
+```
+@SpringBootApplication
+@EnableZuulProxy
+public class ZuulApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ZuulApplication.class, args);
+    }
+}
+```
+6. 启动微服务（7001/7002/7003Eureka->provider-8001->zuul-gateway）
+7. 测试   
+```
+// 不用路由
+http://localhost:8001/dept/get/2
+// 启用路由
+http://myzuul.com:9527/microservicecloud-dept/dept/get/2
+```
+
+**提示**：Zuul主启动类不需要使用注解@EnableEurekaClient也能注册进入Eureka。
 
 
 
