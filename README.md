@@ -1295,9 +1295,6 @@ zuul:
 zuul:
   # ignored-services: microservicecloud-dept     # 原真实服务名忽略(单个)
   ignored-services: "*"     # 多个可以用"*"
-  routes:
-    mydept.serviceId: microservicecloud-dept
-    mydept.path: /mydept/**
 ```
 5. 设置统一公共前缀,修改application.yml,访问```http://myzuul.com:9527/atguigu/mydept/dept/get/1```
 ```
