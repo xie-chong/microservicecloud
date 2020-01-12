@@ -1254,7 +1254,7 @@ info:
   build.artifactId: @project.artifactId@
   build.version: @project.version@
 ```
-4. 修改hosts```127.0.0.1 myzuul.com```
+4. 修改hosts文件，添加```127.0.0.1 myzuul.com```
 5. 新建主启动类，添加@**EnableZuulProxy**
 ```
 @SpringBootApplication
