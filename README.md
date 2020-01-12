@@ -1277,7 +1277,70 @@ http://myzuul.com:9527/microservicecloud-dept/dept/get/2
 **提示**：Zuul主启动类不需要使用注解@EnableEurekaClient也能注册进入Eureka。
 
 
+<h2 id="7.3">7.3 路由访问映射规则</h2>
 
+1. 工程microservicecloud-zuul-gateway-9527
+2. 代理名称,修改applicaation.yml
+```
+zuul:
+  routes:
+    mydept.serviceId: microservicecloud-dept
+    mydept.path: /mydept/**
+```
+3. 此时存在的问题
+* 路由访问OK ```http://myzuul.com:9527/mydept/dept/get/1```
+* 原路径访问OK ```http://myzuul.com:9527/microservicecloud-dept/dept/get/2```
+4. 原真实服务名忽略,修改applicaation.yml
+```
+zuul:
+  # ignored-services: microservicecloud-dept     # 原真实服务名忽略(单个)
+  ignored-services: "*"     # 多个可以用"*"
+  routes:
+    mydept.serviceId: microservicecloud-dept
+    mydept.path: /mydept/**
+```
+5. 设置统一公共前缀,修改applicaation.yml,访问```http://myzuul.com:9527/atguigu/mydept/dept/get/1```
+```
+zuul:
+  prefix: /atguigu
+  # ignored-services: microservicecloud-dept     # 原真实服务名忽略(单个)
+  ignored-services: "*"     # 多个可以用"*"
+  routes:
+    mydept.serviceId: microservicecloud-dept
+    mydept.path: /mydept/**
+```
+6. 完整application.yml
+```
+server:
+  port: 9527
+
+spring:
+  application:
+    name: microservicecloud-zuul-gateway
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka
+  instance:
+    instance-id: gateway-9527.com
+    prefer-ip-address: true
+
+
+zuul:
+  prefix: /atguigu
+  # ignored-services: microservicecloud-dept     # 原真实服务名忽略(单个)
+  ignored-services: "*"     # 多个可以用"*"
+  routes:
+    mydept.serviceId: microservicecloud-dept
+    mydept.path: /mydept/**
+
+info:
+  app.name: atguigu-microcloud
+  company.name: www.atguigu.com
+  build.artifactId: @project.artifactId@
+  build.version: @project.version@
+```
 
 
 
