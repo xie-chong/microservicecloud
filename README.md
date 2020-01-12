@@ -1169,7 +1169,7 @@ Success | Short-Circuited | Bad Request | Timeout | Rejected | Failure | Error %
 
 
 **Terbine集群监控**   
-[Trubine聚合服务](https://blog.csdn.net/hzygcs/article/details/87370201)
+Trubine聚合服务构建参考连接```https://blog.csdn.net/hzygcs/article/details/87370201```
 
 
 
