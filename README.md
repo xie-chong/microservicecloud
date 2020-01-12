@@ -1168,7 +1168,8 @@ Success | Short-Circuited | Bad Request | Timeout | Rejected | Failure | Error %
 曲线：用来记录2分钟内流量的相对变化，可以通过它来观察到流量的上升和下降趋势。
 
 
-
+**Terbine集群监控**   
+[Trubine聚合服务](https://blog.csdn.net/hzygcs/article/details/87370201)
 
 
 
