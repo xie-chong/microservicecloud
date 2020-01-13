@@ -1430,10 +1430,19 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/xie-chong/microservicecloud-config.git #GitHub上面的git仓库名字(也可以使用SSH)
+          uri: https://github.com/xie-chong/microservicecloud-config.git #GitHub上面的git仓库名字(也可以使用SSH,暂未实践成功)
 ```
 9. 新建主启动类，添加注解@**EnableConfigServer**
-10. 修改hosts文件，添加映射```  ```
+```
+@SpringBootApplication
+@EnableConfigServer
+public class Config_3344_StartSpringCloudApp {
+    public static void main(String[] args) {
+        SpringApplication.run(Config_3344_StartSpringCloudApp.class, args);
+    }
+}
+```
+10. 修改hosts文件，添加映射```127.0.0.1 config-3344.com```
 11. 启动项目config-3344
 12. 测试，通过config微服务是否可以从Github上获取配置内容，访问地址
 ```
