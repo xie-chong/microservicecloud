@@ -1462,6 +1462,124 @@ HTTP服务具有以下格式的资源：
 
 
 
+<h2 id="8.3">8.3 SpringCloud Config客户端配置与实现</h2>
+
+**构建步骤**   
+1. 本地git仓库创建客户端配置microservicecloud-config-client.yml，然后推送到GitHub上面
+```
+spring:
+  profiles:
+    active:
+      - dev
+
+---
+server:
+  port: 8201
+
+spring:
+  profiles: dev
+  application:
+    name: microservicecloud-config-client
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-dev.com:7001/eureka/
+---
+server:
+  port: 8202
+
+spring:
+  profiles: test
+  application:
+    name: microservicecloud-config-client
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-test.com:7001/eureka/
+```
+2. 新建Module，microservicecloud-config-client-3355
+3. 修改pom.xml
+```
+    <artifactId>microservicecloud-config-client-3355</artifactId>
+
+    <dependencies>
+        <!-- SpringCloud Config客户端 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+```
+4. 新建application.yml
+```
+spring:
+  application:
+    name: microservicecloud-config-client
+```
+5. 新建bootstrap.yml
+```
+spring:
+  cloud:
+    config:
+      name: microservicecloud-config-client #需要从github上读取的资源名称，注意没有yml后缀名
+      profile: test   #本次访问的配置项
+      label: master
+      uri: http://config-3344.com:3344  #本微服务启动后先去找3344号服务，通过SpringCloudConfig获取GitHub的服务地址
+```
+6. 修改hosts文件，添加映射```127.0.0.1 client-config.com```
+7. 新建ConfigFromRemoteController.java,验证是否能从github上读取配置文件
+```
+@RestController
+public class ConfigFromRemoteController {
+    @Value("${spring.application.name}")
+    private String applicationName;
+
+    @Value("${eureka.client.service-url.defaultZone}")
+    private String eurekaServers;
+
+    @Value("${server.port}")
+    private String port;
+
+    @RequestMapping("/config")
+    public String getConfig() {
+        String str = "applicationName: " + applicationName + "\t eurekaServers:" + eurekaServers + "\t port: " + port;
+        System.out.println("******str: " + str);
+        return "applicationName: " + applicationName + "\t eurekaServers:" + eurekaServers + "\t port: " + port;
+    }
+}
+```
+8. 新建主启动类
+```
+@SpringBootApplication
+public class ConfigClient_3355_StartSpringCloudApp {
+    public static void main(String[] args) {
+        SpringApplication.run(ConfigClient_3355_StartSpringCloudApp.class, args);
+    }
+}
+```
+9. 启动Config配置中心微服务3344，自测访问```http://config-3344.com:3344/microservicecloud-config-client-dev.yml```
+10. 启动3355作为Client测试,bootstrap.yml里面的profile值是什么，决定了从github上读取的内容
+```
+// profile:dev
+http://client-config.com:8201/config
+// profile:test
+http://client-config.com:8202/config
+```
+
+**bootstap.yml与application.yml区别**   
+application.yml是用户级的资源配置项，bootstrap.yml是系统级的，**优先级更高**。
+
+SpringCloud会创建一个“Bootstrap Context”，作为Spring应用的“Application Context”的父上下文。初始化的时候，“Bootstrap Context”负责从外部源加载配置并解析配置。这两个上下文共享一个从外部获取的“Environment”。“Bootstrap”属性有高优先级，默认情况下，它们不会被本地配置覆盖。“Bootstrap Context”和“Application Context”有着不同的约定，所以新增了一个“bootstrap.yml”，保证了“Bootstrap Context” 和“Application Context” 配置的分离。
 
 
 
