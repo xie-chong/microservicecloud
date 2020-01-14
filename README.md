@@ -57,6 +57,9 @@
   - [8.2 SpringCloud Config服务端配置](#8.2)
   - [8.3 SpringCloud Config客户端配置与实现](#8.3)
   - [8.4 SpringCloud Config配置实战](#8.4)
+    - [8.4.1 Git配置文件本地配置](#8.4.1)
+    - [8.4.2 Config版的Eureka服务端构建步骤](#8.4.2)
+    - [8.4.3 Config版的dept微服务构建步骤](#8.4.3)
   
   
   
@@ -1590,7 +1593,7 @@ SpringCloud会创建一个“Bootstrap Context”，作为Spring应用的“Appl
 接下来做一个eureka服务和一个服务提供者dept访问的微服务，两个微服务的配置统一由GitHub获得。实现统一配置，分布式管理，完成多环境的变更。
 
 
-### 8.4.1 Git配置文件本地配置
+<h3 id="8.4.1">8.4.1 Git配置文件本地配置</h3>
 
 1. 本地git仓库创建microservicecloud-config-eureka-client.yml（UTF-8），然后推送到GitHub
 ```
@@ -1748,7 +1751,8 @@ info:
 ```
 
 
-### 8.4.2 Config版的Eureka服务端构建步骤
+<h3 id="8.4.2">8.4.2 Config版的Eureka服务端构建步骤</h3>
+
 1. 新建Module，microservicecloud-config-eureka-client-7001（参考eureka-7001）
 2. POM
 ```
@@ -1795,10 +1799,7 @@ public class Config_Git_EurekaServerApplication {
 6. 测试（启动config-3344->config-eureka-client-7001）,访问```http://eureka7001.com:7001```
 
 
-
-
-
-
+<h3 id="8.4.3">8.4.3 Config版的dept微服务构建步骤</h3>
 
 
 
