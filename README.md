@@ -1583,6 +1583,216 @@ SpringCloud会创建一个“Bootstrap Context”，作为Spring应用的“Appl
 
 
 
+<h2 id="8.4">8.4 SpringCloud Config配置实战</h2>
+
+根据上面步骤，我们的Config服务端配置ok且测试通过，可以利用config+github进行配置修改并获取内容。
+
+接下来做一个eureka服务和一个服务提供者dept访问的微服务，两个微服务的配置统一由GitHub获得。实现统一配置，分布式管理，完成多环境的变更。
+
+
+### 8.4.1 Git配置文件本地配置
+
+1. 本地git仓库创建microservicecloud-config-eureka-client.yml（UTF-8），然后推送到GitHub
+```
+spring:
+  profiles:
+    active:
+      - dev
+---
+server:
+  port: 7001
+
+spring:
+  profiles: dev
+  application:
+    name: microservicecloud-config-eureka-client
+
+eureka:
+  instance:
+    hostname: eureka7001.com # eureka服务端的实例名称
+  #    prefer-ip-address: true
+  client:
+    register-with-eureka: false #false 表示不向注册中心注册自己
+    fetch-registry: false # false 表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/ #设置与Eureka Server交互的地址 查询服务和注册服务都需要依赖这个地址
+---
+server:
+  port: 7001
+
+spring:
+  profiles: test
+  application:
+    name: microservicecloud-config-eureka-client
+
+eureka:
+  instance:
+    hostname: eureka7001.com # eureka服务端的实例名称
+  #    prefer-ip-address: true
+  client:
+    register-with-eureka: false #false 表示不向注册中心注册自己
+    fetch-registry: false # false 表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/ #设置与Eureka Server交互的地址 查询服务和注册服务都需要依赖这个地址
+```
+2. 本地git仓库创建microservicecloud-config-dept-client.yml（UTF-8），然后推送到GitHub
+```
+spring:
+  profiles:
+    active:
+      - dev
+---
+server:
+  port: 8001
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
+  type-aliases-package: com.web.springcloud.entities    # 所有Entity别名类所在包
+  mapper-locations:
+    - classpath:mybatis/mapper/**/*.xml                       # mapper映射文件
+
+spring:
+  profiles: dev
+  application:
+    name: microservicecloud-config-dept-client
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
+    driver-class-name: com.mysql.jdbc.Driver              # mysql驱动包
+    #    driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包
+    url: jdbc:mysql://localhost:3306/clouddb01              # 数据库名称
+    username: root
+    password: 123456
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: true
+    testOnReturn: false
+    poolPreparedStatements: true
+    #配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+  instance:
+    instance-id: microservicecloud-dept8001 # 自定义服务实例Id
+    prefer-ip-address: true     #访问路径可以显示IP地址
+
+# http://192.168.2.100:8001/info优化显示
+info:
+  app.name: web-microservicecloud-config-dept-config01
+  company.name: www.web.com
+  build.artifactId: @project.artifactId@
+  build.version: @project.version@
+---
+server:
+  port: 8001
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
+  type-aliases-package: com.web.springcloud.entities    # 所有Entity别名类所在包
+  mapper-locations:
+    - classpath:mybatis/mapper/**/*.xml                       # mapper映射文件
+
+spring:
+  profiles: test
+  application:
+    name: microservicecloud-config-dept-client
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
+    driver-class-name: com.mysql.jdbc.Driver              # mysql驱动包
+    #    driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包
+    url: jdbc:mysql://localhost:3306/clouddb02              # 数据库名称
+    username: root
+    password: 123456
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: true
+    testOnReturn: false
+    poolPreparedStatements: true
+    #配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+  instance:
+    instance-id: microservicecloud-dept8001 # 自定义服务实例Id
+    prefer-ip-address: true     #访问路径可以显示IP地址
+
+# http://192.168.2.100:8001/info优化显示
+info:
+  app.name: web-microservicecloud-config-dept-config02
+  company.name: www.web.com
+  build.artifactId: @project.artifactId@
+  build.version: @project.version@
+```
+
+
+### 8.4.2 Config版的Eureka服务端构建步骤
+1. 新建Module，microservicecloud-config-eureka-client-7001（参考eureka-7001）
+2. POM
+```
+    <artifactId>microservicecloud-config-eureka-client-7001</artifactId>
+
+    <dependencies>
+        <!-- SpringCloudConfig配置 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka-server</artifactId>
+        </dependency>
+    </dependencies>
+```
+3. bootsrap.yml
+```
+spring:
+  cloud:
+    config:
+      name: microservicecloud-config-eureka-client     #需要从github上读取的资源名称，注意没有yml后缀名
+      profile: dev
+      label: master
+      uri: http://config-3344.com:3344      #SpringCloudConfig获取的服务地址
+```
+4. application.yml
+```
+spring:
+  application:
+    name: microservicecloud-config-eureka-client
+```
+5. 新建主启动类
+```
+@SpringBootApplication
+@EnableEurekaServer
+public class Config_Git_EurekaServerApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(Config_Git_EurekaServerApplication.class, args);
+    }
+}
+```
+6. 测试（启动config-3344->config-eureka-client-7001）,访问```http://eureka7001.com:7001```
 
 
 
