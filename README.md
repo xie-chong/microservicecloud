@@ -1650,7 +1650,7 @@ server:
 
 mybatis:
   config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
-  type-aliases-package: com.web.springcloud.entities    # 所有Entity别名类所在包
+  type-aliases-package: com.atguigu.springcloud.entities    # 所有Entity别名类所在包
   mapper-locations:
     - classpath:mybatis/mapper/**/*.xml                       # mapper映射文件
 
@@ -1658,51 +1658,42 @@ spring:
   profiles: dev
   application:
     name: microservicecloud-config-dept-client
+
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
-    driver-class-name: com.mysql.jdbc.Driver              # mysql驱动包
-    #    driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包
-    url: jdbc:mysql://localhost:3306/clouddb01              # 数据库名称
+    driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包
+    url: jdbc:mysql://localhost:3306/cloudDB01?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&useSSL=false&serverTimezone=UTC              # 数据库名称
     username: root
-    password: 123456
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    maxWait: 60000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 1 FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: true
-    testOnReturn: false
-    poolPreparedStatements: true
-    #配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-    filters: stat,wall,log4j
-    maxPoolPreparedStatementPerConnectionSize: 20
-    useGlobalDataSourceStat: true
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    password: mysql
+
+    dbcp2:
+      min-idle: 5                                           # 数据库连接池的最小维持连接数
+      initial-size: 5                                       # 初始化连接数
+      max-total: 5                                          # 最大连接数
+      max-wait-millis: 200                                  # 等待连接获取的最大超时时间
 
 eureka:
   client: #客户端注册进eureka服务列表内
     service-url:
-      defaultZone: http://localhost:7001/eureka/
+      # defaultZone: http://localhost:7001/eureka   # 单机修改为集群配置
+      defaultZone: http://eureka7001.com:7001/eureka
   instance:
-    instance-id: microservicecloud-dept8001 # 自定义服务实例Id
+    instance-id: microservicecloud-config-dept8001   #自定义服务名称信息
     prefer-ip-address: true     #访问路径可以显示IP地址
 
-# http://192.168.2.100:8001/info优化显示
 info:
-  app.name: web-microservicecloud-config-dept-config01
-  company.name: www.web.com
-  build.artifactId: @project.artifactId@
-  build.version: @project.version@
+  app.name: atguigu-microservicecloud
+  company.name: www.atguigu.com
+  build.artifactId: '@project.artifactId@'
+  build.version: '@project.version@'
+
 ---
 server:
   port: 8001
 
 mybatis:
   config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
-  type-aliases-package: com.web.springcloud.entities    # 所有Entity别名类所在包
+  type-aliases-package: com.atguigu.springcloud.entities    # 所有Entity别名类所在包
   mapper-locations:
     - classpath:mybatis/mapper/**/*.xml                       # mapper映射文件
 
@@ -1710,44 +1701,35 @@ spring:
   profiles: test
   application:
     name: microservicecloud-config-dept-client
+
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
-    driver-class-name: com.mysql.jdbc.Driver              # mysql驱动包
-    #    driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包
-    url: jdbc:mysql://localhost:3306/clouddb02              # 数据库名称
+    driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包
+    url: jdbc:mysql://localhost:3306/cloudDB02?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&useSSL=false&serverTimezone=UTC              # 数据库名称
     username: root
-    password: 123456
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    maxWait: 60000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 1 FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: true
-    testOnReturn: false
-    poolPreparedStatements: true
-    #配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-    filters: stat,wall,log4j
-    maxPoolPreparedStatementPerConnectionSize: 20
-    useGlobalDataSourceStat: true
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    password: mysql
+
+    dbcp2:
+      min-idle: 5                                           # 数据库连接池的最小维持连接数
+      initial-size: 5                                       # 初始化连接数
+      max-total: 5                                          # 最大连接数
+      max-wait-millis: 200                                  # 等待连接获取的最大超时时间
 
 eureka:
   client: #客户端注册进eureka服务列表内
     service-url:
-      defaultZone: http://localhost:7001/eureka/
+      # defaultZone: http://localhost:7001/eureka   # 单机修改为集群配置
+      defaultZone: http://eureka7001.com:7001/eureka
   instance:
-    instance-id: microservicecloud-dept8001 # 自定义服务实例Id
+    instance-id: microservicecloud-config-dept8001   #自定义服务名称信息
     prefer-ip-address: true     #访问路径可以显示IP地址
 
-# http://192.168.2.100:8001/info优化显示
 info:
-  app.name: web-microservicecloud-config-dept-config02
-  company.name: www.web.com
-  build.artifactId: @project.artifactId@
-  build.version: @project.version@
+  app.name: atguigu-microservicecloud
+  company.name: www.atguigu.com
+  build.artifactId: '@project.artifactId@'
+  build.version: '@project.version@'
+
 ```
 
 
@@ -1801,6 +1783,97 @@ public class Config_Git_EurekaServerApplication {
 
 <h3 id="8.4.3">8.4.3 Config版的dept微服务构建步骤</h3>
 
+1. 新建Module，microservicecloud-config-provider-dept-client-8001（参考provider-dept-8001）
+2. POM
+```
+    <artifactId>microservicecloud-config-provider-dept-client-8001</artifactId>
 
+    <dependencies>
+        <!-- 引入自己定义的api通用包，可以使用Dept部门Entity -->
+        <dependency>
+            <groupId>com.atguigu.springcloud</groupId>
+            <artifactId>microservicecloud-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- 将微服务provider侧注册进eureka -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+```
+3. application.yml
+```
+spring:
+  application:
+    name: microservicecloud-config-dept-client
+```
+4. bootstrap.yml
+```
+spring:
+  cloud:
+    config:
+      name: microservicecloud-config-dept-client #需要从github上读取的资源名称，注意没有yml后缀名
+      #profile配置是什么就取什么配置dev or test
+      profile: dev
+      #profile: test
+      label: master
+      uri: http://config-3344.com:3344  #SpringCloudConfig获取的服务地址
+```
+5. 新建主启动类
+```
+@SpringBootApplication
+@MapperScan("com.atguigu.springcloud.dao")
+@EnableEurekaClient
+@EnableDiscoveryClient
+public class DeptProvider8001_config_App {
+    public static void main(String[] args) {
+        SpringApplication.run(DeptProvider8001_config_App.class, args);
+    }
+}
+```
+6. 测试（启动config-3344->config-eureka-client-7001->config-provider-dept-client-8001）
+
+* 默认spring.profiles=dev，连接的数据库为clouddb01。访问```http://localhost:8001/dept/list```
+* 将config-provider-dept-client项目的bootstrap.yml文件中 profile切换为test，再次测试，此时连接的数据库为clouddb02，客户端实现了动态配置切换！！
+
+* 正规玩法应该是运维工程师本地修改了配置(如切换了数据库)，然后上传到远程GitHub。客户端项目在不做修改的情况下（需要重新启动），自动使用新的配置新的数据库！！
 
 
