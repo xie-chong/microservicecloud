@@ -1361,6 +1361,8 @@ info:
 
 <h1 id="8">8. SpringCloud Config分布式配置中心</h1>
 
+![](src/main/resources/img/Spring-Cloud-Config-Architecture.jpg)
+
 <h2 id="8.1">8.1 概述</h2>
 
 ### 8.1.1 分布式系统面临的配置问题
